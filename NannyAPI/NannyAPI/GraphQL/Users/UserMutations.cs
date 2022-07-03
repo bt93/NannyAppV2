@@ -4,6 +4,9 @@ using NannyModels.Models;
 
 namespace NannyAPI.GraphQL.Users
 {
+    /// <summary>
+    /// The User Mutations
+    /// </summary>
     [ExtendObjectType(extendsType: typeof(Mutation))]
     public class UserMutations
     {
@@ -18,6 +21,13 @@ namespace NannyAPI.GraphQL.Users
             _tokenGenerator = tokenGenerator;
         }
 
+        /// <summary>
+        /// Checks if user exsits by their username or email address, checks if the passwordhash matches what is in the db
+        /// and sends a token if it does.
+        /// </summary>
+        /// <param name="input">The username/email and password</param>
+        /// <returns>The user</returns>
+        /// <exception cref="UnauthorizedAccessException">If the user doesn't exist or password is incorrect</exception>
         public LoginPayload Login(LoginInput input)
         {
             var userCheck = _userDAO.GetUserForLogin(input.userNameOrEmail);
@@ -45,5 +55,7 @@ namespace NannyAPI.GraphQL.Users
 
             throw new UnauthorizedAccessException("Username or password incorect.");
         }
+
+
     }
 }

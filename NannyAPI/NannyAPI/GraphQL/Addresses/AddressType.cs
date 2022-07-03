@@ -4,6 +4,9 @@ using HotChocolate.Types;
 
 namespace NannyAPI.GraphQL.Addresses
 {
+    /// <summary>
+    /// The Address ObjectType
+    /// </summary>
     public class AddressType : ObjectType<Address>
     {
         protected override void Configure(IObjectTypeDescriptor<NannyModels.Models.Address> descriptor)

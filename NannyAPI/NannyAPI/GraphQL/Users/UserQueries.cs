@@ -3,6 +3,9 @@ using NannyModels.Models;
 
 namespace NannyAPI.GraphQL.Users
 {
+    /// <summary>
+    /// The User Queries
+    /// </summary>
     [ExtendObjectType(extendsType: typeof(Query))]
     public class UserQueries
     {
@@ -13,9 +16,13 @@ namespace NannyAPI.GraphQL.Users
             _userDAO = userDAO;
         }
 
-        public  ApplicationUser GetUser(int id)
+        /// <summary>
+        /// Gets the current User By their ID
+        /// </summary>
+        /// <returns>The User</returns>
+        public  ApplicationUser GetUser()
         {
-            return _userDAO.GetUserByID(id);
+            return _userDAO.GetUserByID(1);
         }
     }
 }

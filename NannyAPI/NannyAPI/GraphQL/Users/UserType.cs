@@ -4,6 +4,9 @@ using NannyModels.Enumerations;
 
 namespace NannyAPI.GraphQL.Users
 {
+    /// <summary>
+    /// The User ObjectType
+    /// </summary>
     public class UserType : ObjectType<ApplicationUser>
     {
         protected override void Configure(IObjectTypeDescriptor<ApplicationUser> descriptor)

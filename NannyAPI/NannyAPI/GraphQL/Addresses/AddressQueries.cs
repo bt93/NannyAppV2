@@ -4,6 +4,9 @@ using NannyModels.Models;
 
 namespace NannyAPI.GraphQL.Addresses
 {
+    /// <summary>
+    /// The AddressQueries
+    /// </summary>
     [ExtendObjectType(extendsType: typeof(Query))]
     public class AddressQueries
     {
