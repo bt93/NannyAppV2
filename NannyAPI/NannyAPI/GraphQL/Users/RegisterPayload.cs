@@ -2,5 +2,5 @@
 
 namespace NannyAPI.GraphQL.Users
 {
-    public record RegisterInput(ApplicationUserInput user);
+    public record RegisterPayload(ReturnUser returnUser);
 }

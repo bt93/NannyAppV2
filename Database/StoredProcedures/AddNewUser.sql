@@ -22,9 +22,9 @@ CREATE PROCEDURE dbo.AddNewUser
 	@Role VARCHAR(10),
 	@IsVerified BIT,
 	@Address1 VARCHAR(200),
-	@Address2 VARCHAR(200),
-	@Address3 VARCHAR(200),
-	@Address4 VARCHAR(200),
+	@Address2 VARCHAR(200) = '',
+	@Address3 VARCHAR(200) = '',
+	@Address4 VARCHAR(200) = '',
 	@Locality VARCHAR(200),
 	@Region VARCHAR(200),
 	@PostalCode VARCHAR(10),
@@ -38,6 +38,8 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
+	BEGIN TRANSACTION
+
     INSERT INTO ApplicationUser (FirstName, LastName, UserName, EmailAddress, Password, PhoneNumber, Salt, RoleID, IsVerified)
 		VALUES (@FirstName, @LastName, @UserName, @EmailAddress, @Password, @PhoneNumber, @Salt, (SELECT RoleID FROM Role WHERE RoleName = @Role), @IsVerified);
 	SET @UserID = @@IDENTITY;
@@ -48,5 +50,9 @@ BEGIN
 
 	INSERT INTO UserAddress (UserID, AddressID)
 		VALUES (@UserID, @AddressID);
+
+	SELECT @UserID AS UserID
+
+	COMMIT TRANSACTION
 END
 GO

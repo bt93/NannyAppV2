@@ -13,6 +13,7 @@ namespace NannyAPI.GraphQL.Users
         {
             descriptor
                 .Field("userID")
+                .ID()
                 .Resolve(context =>
                 {
                     var claimsPrincipal = context.GetUser();

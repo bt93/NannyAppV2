@@ -41,8 +41,8 @@ BEGIN
 	
 		SET @emailAddressExists = 1
 	
-	SELECT @userNameExists AS UserNameExists;
-	SELECT @emailAddressExists AS EmailAddressExists;
+	SELECT @userNameExists AS UserNameExists, @emailAddressExists as EmailAddressExists;
+	
 	
 END
 GO

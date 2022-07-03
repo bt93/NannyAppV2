@@ -22,5 +22,20 @@ namespace NannyData.Interfaces
         /// <param name="userInput">The users email or username</param>
         /// <returns>The User</returns>
         public ApplicationUser GetUserForLogin(string userInput);
+
+        /// <summary>
+        /// Determines if the username or emailaddress exists
+        /// </summary>
+        /// <param name="userName">The username</param>
+        /// <param name="emailAddress">The email</param>
+        /// <returns>The usercheck</returns>
+        public UserCheck DoesUserExist(string userName, string emailAddress);
+
+        /// <summary>
+        /// Adds new user to the database
+        /// </summary>
+        /// <param name="user">The user to add</param>
+        /// <returns>If insert was successful</returns>
+        public int AddNewUser(ApplicationUser user);
     }
 }
