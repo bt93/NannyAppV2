@@ -1,6 +1,7 @@
 ﻿using HotChocolate.AspNetCore.Authorization;
 using NannyData.Interfaces;
 using NannyModels.Models;
+using System.Security.Claims;
 
 namespace NannyAPI.GraphQL.Addresses
 {
@@ -20,9 +21,10 @@ namespace NannyAPI.GraphQL.Addresses
         [UseSorting]
         [UseFiltering]
         [Authorize]
-        public ICollection<Address> GetAddress(int userID)
+        public ICollection<Address> GetAddress(ClaimsPrincipal claimsPrincipal)
         {
-            return _addressDAO.GetAddressesByUserID(userID);
+            string id = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+            return _addressDAO.GetAddressesByUserID(Int32.Parse(id));
         }
     }
 }

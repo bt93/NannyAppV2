@@ -3,9 +3,9 @@ INSERT INTO Role (RoleName) VALUES ('Caretaker'), ('Parent'), ('Admin')
 
 -- Insert users
 INSERT INTO ApplicationUser (FirstName, LastName, UserName, EmailAddress, Password, PhoneNumber, Salt, RoleID, IsVerified)
- Values ('Jason', 'Howie', 'Admin', 'jason@jason.com', 'ZRxBa7n1wdGcxyPsTmpCjCZ0AWs=', '555-555-5555', 'YsHl2Z3eNWI=', (SELECT RoleID FROM Role WHERE RoleName = 'Admin'), 1)
- ,('Ruth', 'Howie', 'Rudi', 'ruth@ruth.com', 'ZRxBa7n1wdGcxyPsTmpCjCZ0AWs=', '555-555-55555', 'YsHl2Z3eNWI=', (SELECT RoleID FROM Role WHERE RoleName = 'Caretaker'), 0)
- ,('Megan', 'Kweicen', 'Meg', 'megan@megan.com', 'ZRxBa7n1wdGcxyPsTmpCjCZ0AWs=', '555-555-5555', 'YsHl2Z3eNWI=', (SELECT RoleID FROM Role WHERE RoleName = 'Parent'), 0)
+ Values ('Jason', 'Test', 'Admin', 'jason@jason.com', 'ZRxBa7n1wdGcxyPsTmpCjCZ0AWs=', '555-555-5555', 'YsHl2Z3eNWI=', (SELECT RoleID FROM Role WHERE RoleName = 'Admin'), 1)
+ ,('Ruth', 'Test', 'Rudi', 'ruth@ruth.com', 'ZRxBa7n1wdGcxyPsTmpCjCZ0AWs=', '555-555-55555', 'YsHl2Z3eNWI=', (SELECT RoleID FROM Role WHERE RoleName = 'Caretaker'), 0)
+ ,('Megan', 'Test', 'Meg', 'megan@megan.com', 'ZRxBa7n1wdGcxyPsTmpCjCZ0AWs=', '555-555-5555', 'YsHl2Z3eNWI=', (SELECT RoleID FROM Role WHERE RoleName = 'Parent'), 0)
 
  INSERT INTO Address (Address1, Locality, Region, PostalCode, County, Country)
  VALUES ('1397 Old House Drive', 'Milledgeville', 'OH', '43142', 'Fayette', 'United States Of America')
@@ -17,6 +17,22 @@ INSERT INTO ApplicationUser (FirstName, LastName, UserName, EmailAddress, Passwo
 ,((SELECT UserID FROM ApplicationUser WHERE UserName = 'Rudi'), (SELECT AddressID FROM Address WHERE Address1 = '1951 Olive Street'))
 ,((SELECT UserID FROM ApplicationUser WHERE UserName = 'Meg'), (SELECT AddressID FROM Address WHERE Address1 = '4344 Horner Street'))
 ,((SELECT UserID FROM ApplicationUser WHERE UserName = 'Admin'), (SELECT AddressID FROM Address WHERE Address1 = '1951 Olive Street'))
+
+INSERT INTO Gender (GenderCode, GenderName)
+	VALUES ('M', 'Male')
+	,('F', 'Female')
+	,('N', 'Nonbinary')
+	,('O', 'Other')
+
+-- Add children
+INSERT INTO Child (FirstName, LastName, GenderID, DateOfBirth, RatePerHour, NeedsDiapers, Active, ImageURL)
+	VALUES ('Ellie', 'Test', 2, '2018-09-25', 10, 0, 1, '')
+DECLARE @ChildID INT
+SET @ChildID = @@IDENTITY
+
+INSERT INTO ChildUser (UserID, ChildID)
+	VALUES ((SELECT UserID FROM ApplicationUser WHERE UserName = 'Rudi'), @ChildID)
+	,((SELECT UserID FROM ApplicationUser WHERE UserName = 'Meg'), @ChildID)
 
 -- Insert common types of allergies
 INSERT INTO AllergyType (AllergyTypeName) VALUES ('Drug');

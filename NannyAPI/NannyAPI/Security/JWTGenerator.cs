@@ -26,7 +26,7 @@ namespace NannyAPI.Security
         {
             List<Claim> claims = new List<Claim>()
             {
-                new Claim("sub", userName),
+                new Claim("sub", userID.ToString()),
                 new Claim(ClaimTypes.Name, userName),
             };
 

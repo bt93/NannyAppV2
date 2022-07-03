@@ -1,5 +1,7 @@
-﻿using NannyData.Interfaces;
+﻿using HotChocolate.AspNetCore.Authorization;
+using NannyData.Interfaces;
 using NannyModels.Models;
+using System.Security.Claims;
 
 namespace NannyAPI.GraphQL.Users
 {
@@ -20,9 +22,17 @@ namespace NannyAPI.GraphQL.Users
         /// Gets the current User By their ID
         /// </summary>
         /// <returns>The User</returns>
-        public  ApplicationUser GetUser()
+        [Authorize]
+        public ApplicationUser GetCurrentUser(ClaimsPrincipal claimsPrincipal)
         {
-            return _userDAO.GetUserByID(1);
+            string id = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+            return _userDAO.GetUserByID(Int32.Parse(id));
+        }
+
+        [Authorize(Roles = new[] { "Admin" } )]
+        public ApplicationUser GetUser(int userID)
+        {
+            return _userDAO.GetUserByID(userID);
         }
     }
 }

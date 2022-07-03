@@ -17,7 +17,8 @@ namespace NannyAPI.DependencyInjection
                 .AddSingleton<ITokenGenerator, JWTGenerator>(s => new JWTGenerator(jwtSecret))
                 .AddSingleton<IPasswordHasher, PasswordHasher>(s => new PasswordHasher())
                 .AddSingleton<IUserDAO>(s => new SQLUserDAO(connectionString))
-                .AddSingleton<IAddressDAO>(s => new SQLAddressDAO(connectionString));
+                .AddSingleton<IAddressDAO>(s => new SQLAddressDAO(connectionString))
+                .AddSingleton<IChildDAO>(s => new SQLChildDAO(connectionString));
         }
     }
 }

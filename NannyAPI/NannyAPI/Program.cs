@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using NannyAPI.DependencyInjection;
 using NannyAPI.GraphQL;
 using NannyAPI.GraphQL.Addresses;
+using NannyAPI.GraphQL.Children;
 using NannyAPI.GraphQL.Users;
 using System.Text;
 using static NannyAPI.GraphQL.Users.UserType;
@@ -31,7 +32,7 @@ builder.Services
     .AddJwtBearer(x =>
     {
         x.RequireHttpsMetadata = builder.Environment.IsDevelopment() ? false : true;
-        x.SaveToken = false;
+        x.SaveToken = true;
         x.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
@@ -54,7 +55,10 @@ builder.Services
     .AddType<AddressQueries>()
     .AddType<UserType>()
     .AddType<AddressType>()
+    .AddType<ChildType>()
+    .AddType<ChildQueries>()
     .AddType<RoleType>()
+    .AddType<GenderType>()
     .AddFiltering()
     .AddSorting();
 
@@ -69,7 +73,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseRouting();
 
+app.UseCors();
+
 app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>

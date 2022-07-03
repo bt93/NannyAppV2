@@ -11,19 +11,14 @@ namespace NannyAPI.GraphQL.Users
     {
         protected override void Configure(IObjectTypeDescriptor<ApplicationUser> descriptor)
         {
-            descriptor
-                .Field("userID")
-                .ID()
-                .Resolve(context =>
-                {
-                    var claimsPrincipal = context.GetUser();
-                    return claimsPrincipal;
-                });
-
             descriptor.Description("The user information on file");
             descriptor.Field(u => u.Addresses)
                 .ResolveWith<Resolvers>(u => u.GetAddressByUserID(default!, default!))
                 .Description("Gets the address by the Users id");
+
+            descriptor.Field(u => u.Children)
+                .ResolveWith<Resolvers>(u => u.GetChildrenByUserID(default!, default!))
+                .Description("Gets the users children");
 
             descriptor
                 .Field("role")
@@ -47,6 +42,11 @@ namespace NannyAPI.GraphQL.Users
             public ICollection<Address> GetAddressByUserID([Parent] ApplicationUser user, [Service] IAddressDAO addressDAO)
             {
                 return addressDAO.GetAddressesByUserID(user.UserID);
+            }
+
+            public ICollection<Child> GetChildrenByUserID([Parent] ApplicationUser user, [Service] IChildDAO childDAO)
+            {
+                return childDAO.GetChildByUserID(user.UserID);
             }
         }
 

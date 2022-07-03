@@ -112,6 +112,14 @@ namespace NannyModels.Models
         /// The Users Addresses
         /// </value>
         public ICollection<Address> Addresses { get; set; } = new List<Address>();
+
+        /// <summary>
+        /// Gets or sets a list of the users Children
+        /// </summary>
+        /// <value>
+        /// The Users Children
+        /// </value>
+        public ICollection<Child> Children { get; set; } = new List<Child>();
     }
 
     public class ApplicationUserInput
