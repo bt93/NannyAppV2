@@ -1,6 +1,7 @@
 ﻿using NannyData.Interfaces;
 using NannyModels.Models;
 using NannyModels.Enumerations;
+using HotChocolate.AspNetCore.Authorization;
 
 namespace NannyAPI.GraphQL.Users
 {
@@ -38,12 +39,13 @@ namespace NannyAPI.GraphQL.Users
 
         public class Resolvers
         {
-
+            [Authorize]
             public ICollection<Address> GetAddressByUserID([Parent] ApplicationUser user, [Service] IAddressDAO addressDAO)
             {
                 return addressDAO.GetAddressesByUserID(user.UserID);
             }
 
+            [Authorize]
             public ICollection<Child> GetChildrenByUserID([Parent] ApplicationUser user, [Service] IChildDAO childDAO)
             {
                 return childDAO.GetChildByUserID(user.UserID);

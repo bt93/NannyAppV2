@@ -1,5 +1,6 @@
 ﻿using NannyData.DBHelpers;
 using NannyData.Interfaces;
+using NannyModels.Enumerations;
 using NannyModels.Models;
 using System.Data;
 
@@ -23,7 +24,7 @@ namespace NannyData.SQLDAL
                     var command = connection.CreateNewCommand("dbo.GetUserByID");
                     command.AddWithValue("@UserID", id, SqlDbType.Int);
 
-                    return command.ExecuteQuerySingleRowAsync<ApplicationUser>().GetAwaiter().GetResult() ?? new ApplicationUser();
+                    return command.ExecuteQuerySingleRowAsync<ApplicationUser>().GetAwaiter().GetResult();
                 }
                 catch (Exception ex)
                 {
@@ -33,6 +34,17 @@ namespace NannyData.SQLDAL
                 {
                     connection.Close();
                 }
+            }
+        }
+
+        public ICollection<ApplicationUser> GetUsersByChildID(int childID)
+        {
+            using (var connection = _connectionString.CreateConnection())
+            {
+                var command = connection.CreateNewCommand("dbo.GetUsersByChildID");
+                command.AddWithValue("@ChildID", childID, SqlDbType.Int);
+
+                return command.ExecuteQueryAsync<ApplicationUser>().GetAwaiter().GetResult();
             }
         }
 
@@ -46,6 +58,29 @@ namespace NannyData.SQLDAL
                     command.AddWithValue("@UserInput", userInput, SqlDbType.VarChar);
 
                     return command.ExecuteQuerySingleRowAsync<ApplicationUser>().GetAwaiter().GetResult() ?? new ApplicationUser();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
+
+        public ICollection<ApplicationUser> GetUserConnectedByChild(int userID, Role role)
+        {
+            using (var connection = _connectionString.CreateConnection())
+            {
+                try
+                {
+                    var command = connection.CreateNewCommand("dbo.GetUserConnectedByChild");
+                    command.AddWithValue("@UserID", userID, SqlDbType.Int);
+                    command.AddWithValue("@RoleID", role.GetOppositeRole(), SqlDbType.Int);
+
+                    return command.ExecuteQueryAsync<ApplicationUser>().GetAwaiter().GetResult();
                 }
                 catch (Exception ex)
                 {

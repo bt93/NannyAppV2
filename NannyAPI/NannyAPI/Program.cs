@@ -84,6 +84,6 @@ app.UseEndpoints(endpoints =>
     endpoints.MapGraphQL();
 });
 
-app.UseGraphQLVoyager(path: "/schema");
+app.UseGraphQLVoyager(path: "/");
 
 app.Run();

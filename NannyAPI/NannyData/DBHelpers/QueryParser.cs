@@ -12,6 +12,8 @@ namespace NannyData.DBHelpers
             ICollection<T> result = new List<T>();
             table.Load(dataReader);
             command.CloseConnection();
+
+
             foreach(DataRow dr in table.Rows)
             {
                 result.Add(CreateItemFromRow<T>(dr));
@@ -23,11 +25,12 @@ namespace NannyData.DBHelpers
         public static T ParseTableSingleRow<T>(this SqlDataReader dataReader, SqlCommand command) where T : new()
         {
             DataTable table = new DataTable();
-            ICollection<T> result = new List<T>();
 
             table.Load(dataReader);
 
             command.CloseConnection();
+
+            if (table.Rows.Count == 0) { return new(); }
 
             return CreateItemFromRow<T>(table.Rows[0]);
         }

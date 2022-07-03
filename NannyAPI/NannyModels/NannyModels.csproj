@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="HotChocolate.Abstractions" Version="12.11.1" />
+    <PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="12.11.1" />
   </ItemGroup>
 
 </Project>

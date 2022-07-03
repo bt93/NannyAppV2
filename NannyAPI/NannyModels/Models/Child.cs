@@ -1,4 +1,5 @@
 ﻿using NannyModels.Enumerations;
+using NannyModels.Extensions;
 
 namespace NannyModels.Models
 {
@@ -12,7 +13,7 @@ namespace NannyModels.Models
 
         public Gender GenderID { get; set; }
 
-        public string? GenderName { get { return "Female"; } }
+        public string? GenderName { get { return GenderID.GetDisplayName(); } }
 
         public DateTimeOffset DateOfBirth { get; set; }
 

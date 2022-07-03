@@ -1,4 +1,5 @@
-﻿using NannyModels.Models;
+﻿using NannyModels.Enumerations;
+using NannyModels.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +18,26 @@ namespace NannyData.Interfaces
         public ApplicationUser GetUserByID(int id);
 
         /// <summary>
+        /// Gets a User by their associated children
+        /// </summary>
+        /// <param name="id">The user id</param>
+        /// <returns>The Users</returns>
+        public ICollection<ApplicationUser> GetUsersByChildID(int childID);
+
+        /// <summary>
         /// Gets the user info for login
         /// </summary>
         /// <param name="userInput">The users email or username</param>
         /// <returns>The User</returns>
         public ApplicationUser GetUserForLogin(string userInput);
+
+        /// <summary>
+        /// Gets the user that are connected to other users by their children
+        /// </summary>
+        /// <param name="userID">The users id</param>
+        /// <param name="role">The users role</param>
+        /// <returns>A collection of users</returns>
+        public ICollection<ApplicationUser> GetUserConnectedByChild(int userID, Role role);
 
         /// <summary>
         /// Determines if the username or emailaddress exists

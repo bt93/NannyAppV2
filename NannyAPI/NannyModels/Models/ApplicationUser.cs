@@ -1,4 +1,5 @@
 ﻿using HotChocolate;
+using HotChocolate.AspNetCore.Authorization;
 using NannyModels.Enumerations;
 using System.ComponentModel.DataAnnotations;
 
@@ -120,6 +121,24 @@ namespace NannyModels.Models
         /// The Users Children
         /// </value>
         public ICollection<Child> Children { get; set; } = new List<Child>();
+
+        /// <summary>
+        /// Gets or sets a list of parents. Only available to caretakers
+        /// </summary>
+        /// <value>
+        /// The Users parents
+        /// </value>
+        [Authorize(Roles = new[] { "Caretaker" })]
+        public ICollection<ApplicationUser> Parents { get; set; } = new List<ApplicationUser>();
+
+        /// <summary>
+        /// Gets or sets a list of caretakers. Only available to parents
+        /// </summary>
+        /// <value>
+        /// The Users caretakers
+        /// </value>
+        [Authorize(Roles = new[] { "Parent" })]
+        public ICollection<ApplicationUser> Caretakers { get; set; } = new List<ApplicationUser>();
     }
 
     public class ApplicationUserInput
