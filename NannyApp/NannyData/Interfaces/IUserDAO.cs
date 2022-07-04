@@ -55,6 +55,16 @@ namespace NannyData.Interfaces
         public int AddNewUser(ApplicationUser user);
 
         /// <summary>
+        /// Updates a users first name, last name and  phone number
+        /// </summary>
+        /// <param name="userID">The user id</param>
+        /// <param name="firstName">The users first name</param>
+        /// <param name="lastName">The users last name</param>
+        /// <param name="phoneNumber">The users phone number</param>
+        /// <returns></returns>
+        public bool UpdateUser(int userID, string firstName, string lastName, string phoneNumber);
+
+        /// <summary>
         /// Updates the User to IsVerified true
         /// </summary>
         /// <param name="userID">The user id</param>

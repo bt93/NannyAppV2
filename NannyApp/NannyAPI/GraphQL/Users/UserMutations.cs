@@ -92,9 +92,18 @@ namespace NannyAPI.GraphQL.Users
         }
 
         [Authorize]
+        public bool UpdateUser(string firstName, string lastName, string phoneNumber, ClaimsPrincipal claimsPrincipal)
+        {
+            claimsPrincipal.UserNullCheck();
+            string id = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            return _userDAO.UpdateUser(Int32.Parse(id), firstName, lastName, phoneNumber);
+        }
+
+        [Authorize]
         public bool VerifyUser(int userID, ClaimsPrincipal claimsPrincipal)
         {
-            claimsPrincipal.CheckUserIdentity(userID)
+            claimsPrincipal.CheckUserIdentity(userID);
             return _userDAO.VerifyUser(userID);
         }
 

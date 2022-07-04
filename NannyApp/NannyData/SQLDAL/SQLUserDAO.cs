@@ -155,6 +155,31 @@ namespace NannyData.SQLDAL
             }
         }
 
+        public bool UpdateUser(int userID, string firstName, string lastName, string phoneNumber)
+        {
+            using (var connection = _connectionString.CreateConnection())
+            {
+                try
+                {
+                    var command = connection.CreateNewCommand("dbo.UpdateUser");
+                    command.AddWithValue("@UserID", userID, SqlDbType.Int);
+                    command.AddWithValue("@FirstName", firstName, SqlDbType.VarChar);
+                    command.AddWithValue("@LastName", lastName, SqlDbType.VarChar);
+                    command.AddWithValue("@PhoneNumber", phoneNumber, SqlDbType.VarChar);
+
+                    return command.ExecuteWithReturnValueAsync<int>().GetAwaiter().GetResult() == 1;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
+
         public bool VerifyUser(int userID)
         {
             using (var connection = _connectionString.CreateConnection())
