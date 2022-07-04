@@ -20,7 +20,6 @@ CREATE PROCEDURE dbo.AddNewUser
 	@PhoneNumber VARCHAR(20),
 	@Salt NVARCHAR(20),
 	@Role VARCHAR(10),
-	@IsVerified BIT,
 	@Address1 VARCHAR(200),
 	@Address2 VARCHAR(200) = '',
 	@Address3 VARCHAR(200) = '',
@@ -40,8 +39,8 @@ BEGIN
 
 	BEGIN TRANSACTION
 
-    INSERT INTO ApplicationUser (FirstName, LastName, UserName, EmailAddress, Password, PhoneNumber, Salt, RoleID, IsVerified)
-		VALUES (@FirstName, @LastName, @UserName, @EmailAddress, @Password, @PhoneNumber, @Salt, (SELECT RoleID FROM Role WHERE RoleName = @Role), @IsVerified);
+    INSERT INTO ApplicationUser (FirstName, LastName, UserName, EmailAddress, Password, PhoneNumber, Salt, RoleID)
+		VALUES (@FirstName, @LastName, @UserName, @EmailAddress, @Password, @PhoneNumber, @Salt, (SELECT RoleID FROM Role WHERE RoleName = @Role));
 	SET @UserID = @@IDENTITY;
 
 	INSERT INTO Address (Address1, Address2, Address3, Address4, Locality, Region, PostalCode, County, Country)

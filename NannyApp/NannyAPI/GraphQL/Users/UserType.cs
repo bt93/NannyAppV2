@@ -48,7 +48,7 @@ namespace NannyAPI.GraphQL.Users
             [Authorize]
             public ICollection<Child> GetChildrenByUserID([Parent] ApplicationUser user, [Service] IChildDAO childDAO)
             {
-                return childDAO.GetChildByUserID(user.UserID);
+                return childDAO.GetChildrenByUserID(user.UserID);
             }
         }
 

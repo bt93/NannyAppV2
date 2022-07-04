@@ -4,6 +4,8 @@ namespace NannyModels.Enumerations
 {
     public enum Gender
     {
+        [Display(Name = "Uninitialized")]
+        Uninitialized = 0,
         [Display(Name = "Male")]
         M = 1,
         [Display(Name = "Female")]

@@ -1,8 +1,10 @@
-﻿using NannyAPI.Security;
+﻿using HotChocolate.AspNetCore.Authorization;
+using NannyAPI.Security;
 using NannyAPI.Security.Models;
 using NannyData.Interfaces;
 using NannyModels.Enumerations;
 using NannyModels.Models;
+using System.Security.Claims;
 
 namespace NannyAPI.GraphQL.Users
 {
@@ -86,6 +88,14 @@ namespace NannyAPI.GraphQL.Users
             }
 
             throw new Exception("Something went wrong, please try again later");
+        }
+
+        [Authorize]
+        public bool VerifyUser(int userID, ClaimsPrincipal claimsPrincipal)
+        {
+            
+
+            return _userDAO.VerifyUser(userID);
         }
 
         private ApplicationUser MapUser(RegisterInput input, PasswordHash hashedPassword)

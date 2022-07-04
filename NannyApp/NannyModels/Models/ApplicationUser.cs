@@ -107,6 +107,14 @@ namespace NannyModels.Models
         public bool IsVerified { get; set; }
 
         /// <summary>
+        /// Gets or sets if the user is active
+        /// </summary>
+        /// <value>
+        /// If the user is activee
+        /// </value>
+        public bool IsActive { get; set; }
+
+        /// <summary>
         /// Gets or sets a list of the users addresses
         /// </summary>
         /// <value>

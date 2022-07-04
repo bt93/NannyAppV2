@@ -25,14 +25,22 @@ INSERT INTO Gender (GenderCode, GenderName)
 	,('O', 'Other')
 
 -- Add children
-INSERT INTO Child (FirstName, LastName, GenderID, DateOfBirth, RatePerHour, NeedsDiapers, Active, ImageURL)
-	VALUES ('Ellie', 'Test', 2, '2018-09-25', 10, 0, 1, '')
+INSERT INTO Child (FirstName, LastName, GenderID, DateOfBirth, RatePerHour, NeedsDiapers, Active)
+	VALUES ('Ellie', 'Test', 2, '2018-09-25', 10, 0, 1)
 DECLARE @ChildID INT
 SET @ChildID = @@IDENTITY
 
 INSERT INTO ChildUser (UserID, ChildID)
 	VALUES ((SELECT UserID FROM ApplicationUser WHERE UserName = 'Rudi'), @ChildID)
 	,((SELECT UserID FROM ApplicationUser WHERE UserName = 'Meg'), @ChildID)
+
+INSERT INTO Image (ImageURL)
+	VALUES ('https://media.istockphoto.com/photos/frustrated-young-child-sulking-with-crossed-arms-and-dirty-look-picture-id475710000?k=20&m=475710000&s=612x612&w=0&h=-XJ5IojQ5cFlYtUPbC5SNWal5eqzE3DRiBDf2hljfO0=')
+DECLARE @ImageID INT
+SET @ImageID = @@IDENTITY
+
+INSERT INTO ImageChild (ImageID, ChildID)
+	VALUES (@ImageID, @ChildID)
 
 -- Insert common types of allergies
 INSERT INTO AllergyType (AllergyTypeName) VALUES ('Drug');

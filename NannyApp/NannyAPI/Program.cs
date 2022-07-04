@@ -5,6 +5,7 @@ using NannyAPI.GraphQL;
 using NannyAPI.GraphQL.Addresses;
 using NannyAPI.GraphQL.Children;
 using NannyAPI.GraphQL.Users;
+using NannyAPI.Miscellaneous.Errors;
 using System.Text;
 using static NannyAPI.GraphQL.Users.UserType;
 
@@ -59,6 +60,7 @@ builder.Services
     .AddType<ChildQueries>()
     .AddType<RoleType>()
     .AddType<GenderType>()
+    .AddErrorFilter<GraphQLErrorFilter>()
     .AddFiltering()
     .AddSorting();
 

@@ -53,5 +53,11 @@ namespace NannyData.Interfaces
         /// <param name="user">The user to add</param>
         /// <returns>If insert was successful</returns>
         public int AddNewUser(ApplicationUser user);
+
+        /// <summary>
+        /// Updates the User to IsVerified true
+        /// </summary>
+        /// <param name="userID">The user id</param>
+        public bool VerifyUser(int userID);
     }
 }

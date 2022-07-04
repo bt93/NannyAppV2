@@ -42,7 +42,8 @@ CREATE TABLE ApplicationUser (
 	PhoneNumber VARCHAR(20) NOT NULL,
 	Salt NVARCHAR(20) NOT NULL,
 	RoleID INT NOT NULL,
-	IsVerified BIT NOT NULL
+	IsVerified BIT NOT NULL DEFAULT 0,
+	IsActive BIT NOT NULL DEFAULT 1,
 	CONSTRAINT fk_Role_to_User FOREIGN KEY (RoleID) REFERENCES Role(RoleID)
 )
 
@@ -68,9 +69,31 @@ CREATE TABLE Child (
 	DateOfBirth DATETIMEOFFSET(7),
 	RatePerHour DECIMAL(9,4) NOT NULL,
 	NeedsDiapers BIT NOT NULL,
-	Active BIT NOT NULL,
-	ImageURL VARCHAR(100),
+	Active BIT NOT NULL DEFAULT 1,
 	CONSTRAINT fk_Child_Gender FOREIGN KEY (GenderID) REFERENCES Gender(GenderID)
+)
+
+CREATE TABLE Image (
+	ImageID INT IDENTITY PRIMARY KEY,
+	ImageURL VARCHAR(250) NOT NULL,
+	Title VARCHAR(60),
+	Description TEXT
+)
+
+CREATE TABLE ImageChild (
+	ImageID INT NOT NULL,
+	ChildID INT NOT NULL,
+	CONSTRAINT pk_Image_Child PRIMARY KEY (ImageID, ChildID),
+	CONSTRAINT fk_Image_to_Child FOREIGN KEY (ImageID) REFERENCES Image(ImageID),
+	CONSTRAINT fk_Child_to_Image FOREIGN KEY (ChildID) REFERENCES Child(ChildID)
+)
+
+CREATE TABLE ImageUser (
+	ImageID INT NOT NULL,
+	UserID INT NOT NULL,
+	CONSTRAINT pk_Image_User PRIMARY KEY (ImageID, UserID),
+	CONSTRAINT fk_Image_to_User FOREIGN KEY (ImageID) REFERENCES Image(ImageID),
+	CONSTRAINT fk_User_to_Image FOREIGN KEY (UserID) REFERENCES ApplicationUser(UserID)
 )
 
 CREATE TABLE ChildUser (

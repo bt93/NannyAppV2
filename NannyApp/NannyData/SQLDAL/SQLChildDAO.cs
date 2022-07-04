@@ -14,14 +14,48 @@ namespace NannyData.SQLDAL
             _connectionString = connectionString;
         }
 
-        public ICollection<Child> GetChildByUserID(int userID)
+        public ICollection<Child> GetChildrenByUserID(int userID)
         {
             using (var connection = _connectionString.CreateConnection())
             {
-                var command = connection.CreateNewCommand("dbo.GetChildrenByUserID");
-                command.AddWithValue("@UserID", userID, SqlDbType.Int);
+                try
+                {
+                    var command = connection.CreateNewCommand("dbo.GetChildrenByUserID");
+                    command.AddWithValue("@UserID", userID, SqlDbType.Int);
 
-                return command.ExecuteQueryAsync<Child>().GetAwaiter().GetResult();
+                    return command.ExecuteQueryAsync<Child>().GetAwaiter().GetResult();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
+
+        public Child GetChildByID(int childID, int userID)
+        {
+            using (var connection = _connectionString.CreateConnection())
+            {
+                try
+                {
+                    var command = connection.CreateNewCommand("dbo.GetChildByID");
+                    command.AddWithValue("@ChildID", childID, SqlDbType.Int);
+                    command.AddWithValue("@UserID", userID, SqlDbType.Int);
+
+                    return command.ExecuteQuerySingleRowAsync<Child>().GetAwaiter().GetResult() ?? new Child();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
             }
         }
     }

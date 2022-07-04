@@ -19,7 +19,14 @@ namespace NannyAPI.GraphQL.Children
         public ICollection<Child> GetMyChildren(ClaimsPrincipal claimsPrincipal)
         {
             string id = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
-            return _childDAO.GetChildByUserID(Int32.Parse(id));
+            return _childDAO.GetChildrenByUserID(Int32.Parse(id));
+        }
+
+        [Authorize]
+        public Child GetChild(int childID, ClaimsPrincipal claimsPrincipal)
+        {
+            string id = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+            return _childDAO.GetChildByID(childID, Int32.Parse(id));
         }
     }
 }

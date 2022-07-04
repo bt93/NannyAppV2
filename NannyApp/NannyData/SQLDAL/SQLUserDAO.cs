@@ -154,5 +154,27 @@ namespace NannyData.SQLDAL
                 }
             }
         }
+
+        public bool VerifyUser(int userID)
+        {
+            using (var connection = _connectionString.CreateConnection())
+            {
+                try
+                {
+                    var command = connection.CreateNewCommand("dbo.VerifyUser");
+                    command.AddWithValue("@UserID", userID, SqlDbType.Int);
+
+                    return command.ExecuteNonQuery() == 1;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
     }
 }
