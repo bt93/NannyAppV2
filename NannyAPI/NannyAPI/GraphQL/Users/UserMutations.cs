@@ -1,6 +1,7 @@
 ﻿using NannyAPI.Security;
 using NannyAPI.Security.Models;
 using NannyData.Interfaces;
+using NannyModels.Enumerations;
 using NannyModels.Models;
 
 namespace NannyAPI.GraphQL.Users
@@ -35,9 +36,9 @@ namespace NannyAPI.GraphQL.Users
 
             if (userCheck.UserID == 0 || userCheck is null) { throw new UnauthorizedAccessException("Username or password incorect."); }
 
-            if (_passwordHasher.VerifyHashMatch(userCheck.Password, input.password, userCheck.Salt))
+            if (_passwordHasher.VerifyHashMatch(userCheck.Password ?? string.Empty, input.password, userCheck.Salt ?? string.Empty))
             {
-                var token = _tokenGenerator.GenerateToken(userCheck.UserID, userCheck.UserName, userCheck.RoleID);
+                var token = _tokenGenerator.GenerateToken(userCheck.UserID, userCheck.UserName ?? string.Empty, userCheck.RoleID);
                 
                 var returnUser = new ReturnUser()
                 {
@@ -58,26 +59,26 @@ namespace NannyAPI.GraphQL.Users
         {
             if (input is null || input?.user.Addresses.Count == 0) { throw new Exception("User input is null."); }
 
-            UserCheck checkUser = _userDAO.DoesUserExist(input.user.UserName, input.user.EmailAddress);
+            UserCheck checkUser = _userDAO.DoesUserExist(input?.user.UserName ?? string.Empty, input?.user.EmailAddress ?? string.Empty);
 
             if (checkUser.UserNameExists) { throw new UnauthorizedAccessException("This username already exists."); }
             if (checkUser.EmailAddressExists) { throw new UnauthorizedAccessException("This email address already exists."); }
 
 
-            var hashedPassword = _passwordHasher.ComputeHash(input.user.Password);
+            var hashedPassword = _passwordHasher.ComputeHash(input?.user.Password ?? string.Empty);
            
-            var userID = _userDAO.AddNewUser(MapUser(input, hashedPassword));
+            var userID = _userDAO.AddNewUser(MapUser(input ?? new RegisterInput(new ApplicationUserInput()), hashedPassword));
             
             if (userID > 0)
             {
-                var token = _tokenGenerator.GenerateToken(userID, input.user.UserName, input.user.RoleID);
+                var token = _tokenGenerator.GenerateToken(userID, input?.user.UserName ?? string.Empty, input?.user.RoleID ?? Role.Uninitialized);
 
                 var returnUser = new ReturnUser()
                 {
                     UserID = userID,
-                    EmailAddress = input.user.EmailAddress,
-                    UserName = input.user.UserName,
-                    Role = input.user.RoleID,
+                    EmailAddress = input?.user.EmailAddress,
+                    UserName = input?.user.UserName,
+                    Role = input?.user.RoleID,
                     Token = token
                 };
 
