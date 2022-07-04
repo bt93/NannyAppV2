@@ -164,7 +164,7 @@ namespace NannyData.SQLDAL
                     var command = connection.CreateNewCommand("dbo.VerifyUser");
                     command.AddWithValue("@UserID", userID, SqlDbType.Int);
 
-                    return command.ExecuteNonQuery() == 1;
+                    return command.ExecuteWithReturnValueAsync<int>().GetAwaiter().GetResult() == 1;
                 }
                 catch (Exception ex)
                 {

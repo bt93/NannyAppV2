@@ -14,5 +14,10 @@ namespace NannyAPI.GraphQL.Children
         }
     }
 
+    public class Resolvers
+    {
+
+    }
+
     public class GenderType : EnumType<Gender> { }
 }

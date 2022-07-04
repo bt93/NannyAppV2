@@ -4,7 +4,7 @@
     {
         public IError OnError(IError error)
         {
-            return error.WithMessage(error.Exception?.Message ?? string.Empty);
+            return error.WithMessage(error.Exception?.Message ?? error.Message).RemoveException().RemoveExtensions();
         }
     }
 }

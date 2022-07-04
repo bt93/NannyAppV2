@@ -1,4 +1,5 @@
 ﻿using HotChocolate.AspNetCore.Authorization;
+using NannyAPI.Miscellaneous.Errors;
 using NannyData.Interfaces;
 using NannyModels.Enumerations;
 using NannyModels.Models;
@@ -26,12 +27,8 @@ namespace NannyAPI.GraphQL.Users
         [Authorize]
         public ApplicationUser GetCurrentUser(ClaimsPrincipal claimsPrincipal)
         {
+            claimsPrincipal.UserNullCheck();
             string id = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (id is null)
-            {
-                throw new UnauthorizedAccessException("User not logged in");
-            }
 
             return _userDAO.GetUserByID(Int32.Parse(id));
         }
@@ -46,6 +43,7 @@ namespace NannyAPI.GraphQL.Users
         [Authorize(Roles = new[] { "Caretaker" })]
         public ICollection<ApplicationUser> GetMyParents(ClaimsPrincipal claimsPrincipal)
         {
+            claimsPrincipal.UserNullCheck();
             string id = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
             string role = claimsPrincipal.FindFirstValue(ClaimTypes.Role);
 

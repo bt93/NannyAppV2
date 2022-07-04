@@ -1,4 +1,5 @@
 ﻿using HotChocolate.AspNetCore.Authorization;
+using NannyAPI.Miscellaneous.Errors;
 using NannyAPI.Security;
 using NannyAPI.Security.Models;
 using NannyData.Interfaces;
@@ -93,8 +94,7 @@ namespace NannyAPI.GraphQL.Users
         [Authorize]
         public bool VerifyUser(int userID, ClaimsPrincipal claimsPrincipal)
         {
-            
-
+            claimsPrincipal.CheckUserIdentity(userID)
             return _userDAO.VerifyUser(userID);
         }
 

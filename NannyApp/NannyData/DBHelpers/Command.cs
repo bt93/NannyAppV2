@@ -18,16 +18,75 @@ namespace NannyData.DBHelpers
             return command.Parameters[parameterName];
         }
 
-        public static void NonQuery(this SqlCommand command)
+        public static int NonQuery(this SqlCommand command)
         {
             if (command is null)
             {
                 throw new ArgumentNullException("Sql Command not found");
             }
 
-            command.OpenConnection();
-            command.ExecuteNonQuery();
-            command.CloseConnection();
+            try
+            {
+                command.OpenConnection();
+                return command.ExecuteNonQuery();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                command.CloseConnection();
+            }
+        }
+
+        public static object Scalar(this SqlCommand command)
+        {
+            if (command is null)
+            {
+                throw new ArgumentNullException("Sql Command not found");
+            }
+
+            try
+            {
+                command.OpenConnection();
+                return command.ExecuteScalar();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                command.CloseConnection();
+            }
+        }
+
+        public static async Task<T> ExecuteWithReturnValueAsync<T>(this SqlCommand command) where T : new()
+        {
+            if (command is null)
+            {
+                throw new ArgumentNullException("Sql Command not found");
+            }
+
+            try
+            {
+                SqlParameter returnValue = new SqlParameter();
+                returnValue.Direction = ParameterDirection.ReturnValue;
+                command.Parameters.Add(returnValue);
+                command.OpenConnection();
+                command.ExecuteNonQuery();
+                return (T)returnValue.Value;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                command.CloseConnection();
+            }
+
         }
 
         public static ICollection<T> ExecuteQuery<T>(this SqlCommand command) where T : new()
