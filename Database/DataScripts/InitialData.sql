@@ -2,10 +2,15 @@
 INSERT INTO Role (RoleName) VALUES ('Caretaker'), ('Parent'), ('Admin')
 
 -- Insert users
-INSERT INTO ApplicationUser (FirstName, LastName, UserName, EmailAddress, Password, PhoneNumber, Salt, RoleID, IsVerified)
- Values ('Jason', 'Test', 'Admin', 'jason@jason.com', 'ZRxBa7n1wdGcxyPsTmpCjCZ0AWs=', '555-555-5555', 'YsHl2Z3eNWI=', (SELECT RoleID FROM Role WHERE RoleName = 'Admin'), 1)
- ,('Ruth', 'Test', 'Rudi', 'ruth@ruth.com', 'ZRxBa7n1wdGcxyPsTmpCjCZ0AWs=', '555-555-55555', 'YsHl2Z3eNWI=', (SELECT RoleID FROM Role WHERE RoleName = 'Caretaker'), 0)
- ,('Megan', 'Test', 'Meg', 'megan@megan.com', 'ZRxBa7n1wdGcxyPsTmpCjCZ0AWs=', '555-555-5555', 'YsHl2Z3eNWI=', (SELECT RoleID FROM Role WHERE RoleName = 'Parent'), 0)
+INSERT INTO ApplicationUser (FirstName, LastName, UserName, EmailAddress, Password, PhoneNumber, Salt, IsVerified)
+ Values ('Jason', 'Test', 'Admin', 'jason@jason.com', 'ZRxBa7n1wdGcxyPsTmpCjCZ0AWs=', '555-555-5555', 'YsHl2Z3eNWI=', 1)
+ ,('Ruth', 'Test', 'Rudi', 'ruth@ruth.com', 'ZRxBa7n1wdGcxyPsTmpCjCZ0AWs=', '555-555-55555', 'YsHl2Z3eNWI=', 0)
+ ,('Megan', 'Test', 'Meg', 'megan@megan.com', 'ZRxBa7n1wdGcxyPsTmpCjCZ0AWs=', '555-555-5555', 'YsHl2Z3eNWI=', 0)
+
+INSERT INTO UserRole (UserID, RoleID)
+	VALUES ((SELECT UserID FROM ApplicationUser WHERE UserName = 'Admin'), (SELECT RoleID FROM Role WHERE RoleName = 'Admin'))
+	,((SELECT UserID FROM ApplicationUser WHERE UserName = 'Rudi'), (SELECT RoleID FROM Role WHERE RoleName = 'Caretaker'))
+	,((SELECT UserID FROM ApplicationUser WHERE UserName = 'Meg'), (SELECT RoleID FROM Role WHERE RoleName = 'Parent'))
 
  INSERT INTO Address (Address1, Locality, Region, PostalCode, County, Country)
  VALUES ('1397 Old House Drive', 'Milledgeville', 'OH', '43142', 'Fayette', 'United States Of America')

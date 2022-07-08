@@ -21,7 +21,8 @@ BEGIN
 	SET NOCOUNT ON;
 
 	SELECT * FROM ApplicationUser au
-		WHERE au.RoleID = @RoleID AND
+	JOIN UserRole ur ON ur.UserID = au.UserID
+		WHERE ur.RoleID = @RoleID AND
 		au.UserID IN 
 			(SELECT UserID FROM Child c
 				JOIN ChildUser cu ON cu.ChildID = c.ChildID

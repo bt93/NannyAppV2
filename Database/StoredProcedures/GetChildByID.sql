@@ -21,10 +21,11 @@ BEGIN
 	SET NOCOUNT ON;
 
 	IF EXISTS (
-		SELECT UserID FROM 
-		ApplicationUser
-		WHERE UserID = @UserID
-		AND RoleID = 3)
+		SELECT au.UserID FROM 
+		ApplicationUser au
+		JOIN UserRole ur ON ur.UserID = au.UserID
+		WHERE au.UserID = @UserID
+		AND ur.RoleID = 3)
 	
 		SELECT c.* FROM Child c WITH(NOLOCK)
 		WHERE c.ChildID = @ChildID

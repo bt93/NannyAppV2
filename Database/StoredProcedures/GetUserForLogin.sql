@@ -20,7 +20,8 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	SELECT UserID, EmailAddress, UserName, Password, Salt, RoleID FROM ApplicationUser with(nolock)
+	SELECT au.UserID, EmailAddress, UserName, Password, Salt, RoleID FROM ApplicationUser au with(nolock)
+	JOIN UserRole ur ON ur.UserID = au.UserID
 		WHERE (UserName = @UserInput OR EmailAddress = @UserInput);
 END
 GO

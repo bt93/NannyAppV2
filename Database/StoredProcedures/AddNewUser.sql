@@ -39,8 +39,8 @@ BEGIN
 
 	BEGIN TRANSACTION
 
-    INSERT INTO ApplicationUser (FirstName, LastName, UserName, EmailAddress, Password, PhoneNumber, Salt, RoleID)
-		VALUES (@FirstName, @LastName, @UserName, @EmailAddress, @Password, @PhoneNumber, @Salt, (SELECT RoleID FROM Role WHERE RoleName = @Role));
+    INSERT INTO ApplicationUser (FirstName, LastName, UserName, EmailAddress, Password, PhoneNumber, Salt)
+		VALUES (@FirstName, @LastName, @UserName, @EmailAddress, @Password, @PhoneNumber, @Salt);
 	SET @UserID = @@IDENTITY;
 
 	INSERT INTO Address (Address1, Address2, Address3, Address4, Locality, Region, PostalCode, County, Country)
@@ -49,6 +49,9 @@ BEGIN
 
 	INSERT INTO UserAddress (UserID, AddressID)
 		VALUES (@UserID, @AddressID);
+
+	INSERT INTO UserRole (UserID, RoleID)
+		VALUES(@UserID, (SELECT RoleID FROM Role WHERE RoleName = @Role))
 
 	SELECT @UserID AS UserID
 
