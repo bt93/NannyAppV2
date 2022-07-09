@@ -48,6 +48,15 @@ SET @ImageID = @@IDENTITY
 INSERT INTO ImageChild (ImageID, ChildID)
 	VALUES (@ImageID, @ChildID)
 
+INSERT INTO Session (ChildID, DropOff, PickUp, Notes)
+	VALUES (@ChildID, GETDATE(), '', '')
+DECLARE @SessionID INT
+SET @SessionID = @@IDENTITY
+
+INSERT INTO SessionUser(SessionID, UserID)
+	VALUES (@SessionID, (SELECT UserID FROM ApplicationUser WHERE UserName = 'Rudi'))
+	--,(@SessionID, (SELECT UserID FROM ApplicationUser WHERE UserName = 'Meg'))
+
 -- Insert common types of allergies
 INSERT INTO AllergyType (AllergyTypeName) VALUES ('Drug');
 INSERT INTO AllergyType (AllergyTypeName) VALUES ('Food');
