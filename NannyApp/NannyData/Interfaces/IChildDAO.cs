@@ -18,5 +18,13 @@ namespace NannyData.Interfaces
         /// <param name="userID">The users id</param>
         /// <returns>A child</returns>
         public Child GetChildByID(int childID, int userID);
+
+        /// <summary>
+        /// Adds new child
+        /// </summary>
+        /// <param name="child">The child</param>
+        /// <param name="userID">The user id</param>
+        /// <returns>True if successful</returns>
+        public bool AddChild(ChildInput child, int userID);
     }
 }

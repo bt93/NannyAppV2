@@ -58,5 +58,34 @@ namespace NannyData.SQLDAL
                 }
             }
         }
+
+        public bool AddChild(ChildInput child, int userID)
+        {
+            using (var connection = _connectionString.CreateConnection())
+            {
+                try
+                {
+                    var command = connection.CreateNewCommand("dbo.AddChild");
+                    command.AddWithValue("@FirstName", child.FirstName ?? string.Empty, SqlDbType.VarChar);
+                    command.AddWithValue("@LastName", child.LastName ?? string.Empty, SqlDbType.VarChar);
+                    command.AddWithValue("@GenderID", child.GenderID, SqlDbType.Int);
+                    command.AddWithValue("@DateOfBirth", child.DateOfBirth, SqlDbType.DateTimeOffset);
+                    command.AddWithValue("@RatePerHour", child.RatePerHour, SqlDbType.Decimal);
+                    command.AddWithValue("@NeedsDiapers", child.NeedsDiapers, SqlDbType.Bit);
+                    command.AddWithValue("@Active", true, SqlDbType.Bit);
+                    command.AddWithValue("@UserID", userID, SqlDbType.Int);
+
+                    return command.ExecuteWithReturnValueAsync<int>().GetAwaiter().GetResult() == 1;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
     }
 }

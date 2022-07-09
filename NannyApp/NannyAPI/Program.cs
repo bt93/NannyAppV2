@@ -60,6 +60,7 @@ builder.Services
     .AddType<AddressType>()
     .AddType<ChildType>()
     .AddType<ChildQueries>()
+    .AddType<ChildMutations>()
     .AddType<SessionQueries>()
     .AddType<SessionType>()
     .AddType<RoleQueries>()
