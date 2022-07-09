@@ -1,7 +1,7 @@
 ﻿using NannyModels.Enumerations;
 using NannyModels.Extensions;
 
-namespace NannyModels.Models
+namespace NannyModels.Models.ChildModels
 {
     public class Child
     {

@@ -4,8 +4,8 @@ using NannyAPI.Security;
 using NannyAPI.Security.Models;
 using NannyData.Interfaces;
 using NannyModels.Enumerations;
-using NannyModels.Models;
-using NannyModels.Models.User;
+using NannyModels.Models.AddressModels;
+using NannyModels.Models.UserModels;
 using System.Security.Claims;
 
 namespace NannyAPI.GraphQL.Users

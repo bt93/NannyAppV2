@@ -1,4 +1,4 @@
-﻿using NannyModels.Models;
+﻿using NannyModels.Models.AddressModels;
 
 namespace NannyData.Interfaces
 {

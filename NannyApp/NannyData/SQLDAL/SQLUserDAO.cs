@@ -1,7 +1,7 @@
 ﻿using NannyData.DBHelpers;
 using NannyData.Interfaces;
 using NannyModels.Enumerations;
-using NannyModels.Models.User;
+using NannyModels.Models.UserModels;
 using System.Data;
 
 namespace NannyData.SQLDAL

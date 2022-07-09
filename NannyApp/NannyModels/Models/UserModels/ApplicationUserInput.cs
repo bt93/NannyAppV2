@@ -1,8 +1,9 @@
 ﻿using HotChocolate;
 using NannyModels.Enumerations;
+using NannyModels.Models.AddressModels;
 using System.ComponentModel.DataAnnotations;
 
-namespace NannyModels.Models.User
+namespace NannyModels.Models.UserModels
 {
     public class ApplicationUserInput
     {

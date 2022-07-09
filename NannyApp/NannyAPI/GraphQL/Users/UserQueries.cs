@@ -2,7 +2,7 @@
 using NannyAPI.Miscellaneous.Errors;
 using NannyData.Interfaces;
 using NannyModels.Enumerations;
-using NannyModels.Models.User;
+using NannyModels.Models.UserModels;
 using System.Security.Claims;
 
 namespace NannyAPI.GraphQL.Users

@@ -1,6 +1,6 @@
 ﻿using NannyModels.Enumerations;
 
-namespace NannyModels.Models.User
+namespace NannyModels.Models.UserModels
 {
     /// <summary>
     /// The returned user on successful login

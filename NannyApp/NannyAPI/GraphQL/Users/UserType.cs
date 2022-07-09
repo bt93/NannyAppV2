@@ -1,8 +1,9 @@
 ﻿using NannyData.Interfaces;
-using NannyModels.Models;
 using NannyModels.Enumerations;
 using HotChocolate.AspNetCore.Authorization;
-using NannyModels.Models.User;
+using NannyModels.Models.UserModels;
+using NannyModels.Models.AddressModels;
+using NannyModels.Models.ChildModels;
 
 namespace NannyAPI.GraphQL.Users
 {

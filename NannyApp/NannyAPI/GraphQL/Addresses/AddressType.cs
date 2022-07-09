@@ -1,7 +1,7 @@
 ﻿using NannyData.Interfaces;
-using NannyModels.Models;
 using HotChocolate.Types;
-using NannyModels.Models.User;
+using NannyModels.Models.UserModels;
+using NannyModels.Models.AddressModels;
 
 namespace NannyAPI.GraphQL.Addresses
 {
@@ -10,7 +10,7 @@ namespace NannyAPI.GraphQL.Addresses
     /// </summary>
     public class AddressType : ObjectType<Address>
     {
-        protected override void Configure(IObjectTypeDescriptor<NannyModels.Models.Address> descriptor)
+        protected override void Configure(IObjectTypeDescriptor<Address> descriptor)
         {
             descriptor.Description("The user addresses on file");
             descriptor.Field(a => a.User)

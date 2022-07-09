@@ -1,6 +1,6 @@
 ﻿using NannyData.DBHelpers;
 using NannyData.Interfaces;
-using NannyModels.Models;
+using NannyModels.Models.ChildModels;
 using System.Data;
 
 namespace NannyData.SQLDAL

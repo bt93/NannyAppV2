@@ -1,5 +1,5 @@
 ﻿using NannyModels.Enumerations;
-using NannyModels.Models.User;
+using NannyModels.Models.UserModels;
 
 namespace NannyData.Interfaces
 {

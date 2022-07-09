@@ -1,5 +1,5 @@
 ﻿using NannyModels.Enumerations;
-using NannyModels.Models;
+using NannyModels.Models.ChildModels;
 
 namespace NannyAPI.GraphQL.Children
 {

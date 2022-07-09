@@ -1,4 +1,4 @@
-﻿namespace NannyModels.Models.User
+﻿namespace NannyModels.Models.UserModels
 {
     /// <summary>
     /// Check for username and email

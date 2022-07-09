@@ -1,5 +1,5 @@
 ﻿using NannyModels.Models;
-using NannyModels.Models.User;
+using NannyModels.Models.UserModels;
 
 namespace NannyAPI.GraphQL.Users
 {

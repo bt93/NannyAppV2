@@ -1,6 +1,6 @@
 ﻿using HotChocolate.AspNetCore.Authorization;
 using NannyData.Interfaces;
-using NannyModels.Models;
+using NannyModels.Models.ChildModels;
 using System.Security.Claims;
 
 namespace NannyAPI.GraphQL.Children
