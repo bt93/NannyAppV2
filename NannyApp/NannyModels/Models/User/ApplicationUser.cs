@@ -93,7 +93,7 @@ namespace NannyModels.Models.User
         /// <value>
         /// The Users Role
         /// </value>
-        public ICollection<Role> RoleID { get; set; } = new List<Role>();
+        public ICollection<Role> Roles { get; set; } = new List<Role>();
 
 
         /// <summary>

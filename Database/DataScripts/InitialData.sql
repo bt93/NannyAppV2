@@ -9,6 +9,7 @@ INSERT INTO ApplicationUser (FirstName, LastName, UserName, EmailAddress, Passwo
 
 INSERT INTO UserRole (UserID, RoleID)
 	VALUES ((SELECT UserID FROM ApplicationUser WHERE UserName = 'Admin'), (SELECT RoleID FROM Role WHERE RoleName = 'Admin'))
+	,((SELECT UserID FROM ApplicationUser WHERE UserName = 'Admin'), (SELECT RoleID FROM Role WHERE RoleName = 'Caretaker'))
 	,((SELECT UserID FROM ApplicationUser WHERE UserName = 'Rudi'), (SELECT RoleID FROM Role WHERE RoleName = 'Caretaker'))
 	,((SELECT UserID FROM ApplicationUser WHERE UserName = 'Meg'), (SELECT RoleID FROM Role WHERE RoleName = 'Parent'))
 

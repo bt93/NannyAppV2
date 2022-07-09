@@ -22,15 +22,11 @@ namespace NannyAPI.GraphQL.Users
                 .ResolveWith<Resolvers>(u => u.GetChildrenByUserID(default!, default!))
                 .Description("Gets the users children");
 
-            descriptor.Field(u => u.RoleID)
+            descriptor.Field(u => u.Roles)
                 .Argument("roles", a => a.Type<RoleType>())
+                .Resolve(context => context.ArgumentValue<Role>("roles"))
                 .ResolveWith<Resolvers>(u => u.GetRolesByUserID(default!, default!))
                 .Description("Gets the users roles");
-
-            //descriptor
-            //    .Field("roleID")
-            //    .Argument("roles", a => a.Type<RoleType>())
-            //    .Resolve(context => context.ArgumentValue<Role>("roles"));
 
             // Descriptions
             descriptor.Field(u => u.UserID).Description("The Users id");
@@ -39,7 +35,7 @@ namespace NannyAPI.GraphQL.Users
             descriptor.Field(u => u.UserName).Description("The Users user name");
             descriptor.Field(u => u.EmailAddress).Description("The Users email address");
             descriptor.Field(u => u.PhoneNumber).Description("The Users phone number");
-            descriptor.Field(u => u.RoleID).Description("The Users roles");
+            descriptor.Field(u => u.Roles).Description("The Users roles");
             descriptor.Field(u => u.Addresses).Description("The Users addresses");
         }
 

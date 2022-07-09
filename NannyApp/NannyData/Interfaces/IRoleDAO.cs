@@ -9,6 +9,6 @@ namespace NannyData.Interfaces
         /// </summary>
         /// <param name="userID">The user id</param>
         /// <returns>The roles</returns>
-        public List<Role> GetRolesByUserID(int userID);
+        public ICollection<Role> GetRolesByUserID(int userID);
     }
 }

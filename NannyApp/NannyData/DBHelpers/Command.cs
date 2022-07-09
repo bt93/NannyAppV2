@@ -153,5 +153,21 @@ namespace NannyData.DBHelpers
                 return result;
             }
         }
+
+        public static async Task<ICollection<T>> ExecuteQueryEnumAsync<T>(this SqlCommand command) where T : new()
+        {
+            if (command is null)
+            {
+                throw new ArgumentNullException("Sql Command not found");
+            }
+
+            command.OpenConnection();
+
+            using (var reader = await command.ExecuteReaderAsync())
+            {
+                var result = reader.ParseTableForEnum<T>(command);
+                return result;
+            }
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace NannyAPI.GraphQL.Roles
         }
 
         [Authorize]
-        public List<Role> GetMyRoles(ClaimsPrincipal claimsPrincipal)
+        public ICollection<Role> GetMyRoles(ClaimsPrincipal claimsPrincipal)
         {
             claimsPrincipal.UserNullCheck();
             string id = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -29,7 +29,7 @@ namespace NannyAPI.GraphQL.Roles
         }
 
         [Authorize(Roles = new[] { "Admin" })]
-        public List<Role> GetRolesByID(int userID)
+        public ICollection<Role> GetRolesByID(int userID)
         {
             return _roleDAO.GetRolesByUserID(userID);
         }

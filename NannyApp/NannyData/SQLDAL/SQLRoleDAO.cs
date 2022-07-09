@@ -14,7 +14,7 @@ namespace NannyData.SQLDAL
             _connectionString = connectionString;
         }
 
-        public List<Role> GetRolesByUserID(int userID)
+        public ICollection<Role> GetRolesByUserID(int userID)
         {
             using (var connection = _connectionString.CreateConnection())
             {
@@ -23,7 +23,7 @@ namespace NannyData.SQLDAL
                     var command = connection.CreateNewCommand("dbo.GetRolesByUserID");
                     command.AddWithValue("@UserID", userID, SqlDbType.Int);
 
-                    return command.ExecuteQuerySingleRowAsync<List<Role>>().GetAwaiter().GetResult();
+                    return command.ExecuteQueryEnumAsync<Role>().GetAwaiter().GetResult();
                 }
                 catch (Exception ex)
                 {

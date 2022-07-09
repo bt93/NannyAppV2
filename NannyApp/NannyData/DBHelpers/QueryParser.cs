@@ -35,6 +35,32 @@ namespace NannyData.DBHelpers
             return CreateItemFromRow<T>(table.Rows[0]);
         }
 
+        public static ICollection<T> ParseTableForEnum<T>(this SqlDataReader dataReader, SqlCommand command) where T : new()
+        {
+            DataTable table = new DataTable();
+            ICollection<T> result = new List<T>();
+            table.Load(dataReader);
+            command.CloseConnection();
+
+            foreach (DataRow dr in table.Rows)
+            {
+                if (dr.Table.Columns.Count == 1)
+                {
+                    foreach (var column in dr.Table.Columns)
+                    {
+                        T item = new T();
+
+                        if (item?.GetType()?.BaseType?.Equals(typeof(Enum)) ?? false)
+                        {
+                            result.Add(SetItemFromEnum<T>((T)item, dr));
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
         public static T CreateSingleFromTable<T>(this DataTable dataTable) where T : new()
         {
             return CreateItemFromRow<T>(dataTable.Select()[0]);
@@ -87,6 +113,11 @@ namespace NannyData.DBHelpers
                     propertyInfo.SetValue(item, dataRow[column], null);
                 }
             }
+        }
+
+        public static T SetItemFromEnum<T>(T item, DataRow dataRow) where T : new()
+        {
+            return (T)Enum.Parse(item.GetType(), dataRow[item.GetType().Name].ToString() ?? string.Empty);
         }
 
         public static T CreateItemFromColumn<T>(DataColumn dataColumn) where T : new()

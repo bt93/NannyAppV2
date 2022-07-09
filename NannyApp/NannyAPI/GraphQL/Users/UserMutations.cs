@@ -17,12 +17,14 @@ namespace NannyAPI.GraphQL.Users
     public class UserMutations
     {
         private readonly IUserDAO _userDAO;
+        private readonly IRoleDAO _roleDAO;
         private readonly IPasswordHasher _passwordHasher;
         private readonly ITokenGenerator _tokenGenerator;
 
-        public UserMutations(IUserDAO userDAO, IPasswordHasher passwordHasher, ITokenGenerator tokenGenerator)
+        public UserMutations(IUserDAO userDAO, IRoleDAO roleDAO, IPasswordHasher passwordHasher, ITokenGenerator tokenGenerator)
         {
             _userDAO = userDAO;
+            _roleDAO = roleDAO;
             _passwordHasher = passwordHasher;
             _tokenGenerator = tokenGenerator;
         }
@@ -42,14 +44,21 @@ namespace NannyAPI.GraphQL.Users
 
             if (_passwordHasher.VerifyHashMatch(userCheck.Password ?? string.Empty, input.password, userCheck.Salt ?? string.Empty))
             {
-                var token = _tokenGenerator.GenerateToken(userCheck.UserID, userCheck.UserName ?? string.Empty, userCheck.RoleID.FirstOrDefault());
+                List<Role> roles = new List<Role>();
+                roles.AddRange(_roleDAO.GetRolesByUserID(userCheck.UserID));
+                Role roleToUse;
+
+                if (roles.Contains(Role.Admin)) { roleToUse = Role.Admin; }
+                else { roleToUse = roles.FirstOrDefault(); }
+
+                var token = _tokenGenerator.GenerateToken(userCheck.UserID, userCheck.UserName ?? string.Empty, roleToUse);
                 
                 var returnUser = new ReturnUser()
                 {
                     UserID = userCheck.UserID,
                     EmailAddress = userCheck.EmailAddress,
                     UserName = userCheck.UserName,
-                    Roles = userCheck.RoleID,
+                    Roles = roles,
                     Token = token
                 };
 
@@ -140,7 +149,7 @@ namespace NannyAPI.GraphQL.Users
                 Password = hashedPassword.Password,
                 Salt = hashedPassword.Salt,
                 PhoneNumber = input.user.PhoneNumber,
-                RoleID = roles,
+                Roles = roles,
                 IsVerified = false,
                 Addresses = addresses,
             };
