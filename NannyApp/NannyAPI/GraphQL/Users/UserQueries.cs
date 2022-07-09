@@ -2,7 +2,7 @@
 using NannyAPI.Miscellaneous.Errors;
 using NannyData.Interfaces;
 using NannyModels.Enumerations;
-using NannyModels.Models;
+using NannyModels.Models.User;
 using System.Security.Claims;
 
 namespace NannyAPI.GraphQL.Users
@@ -15,7 +15,7 @@ namespace NannyAPI.GraphQL.Users
     {
         private readonly IUserDAO _userDAO;
 
-        public UserQueries(IUserDAO userDAO, ClaimsPrincipal claimsPrincipal)
+        public UserQueries(IUserDAO userDAO)
         {
             _userDAO = userDAO;
         }

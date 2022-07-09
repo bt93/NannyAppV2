@@ -1,6 +1,7 @@
 ﻿using NannyData.Interfaces;
 using NannyModels.Models;
 using HotChocolate.Types;
+using NannyModels.Models.User;
 
 namespace NannyAPI.GraphQL.Addresses
 {

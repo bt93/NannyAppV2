@@ -4,6 +4,7 @@ using NannyAPI.DependencyInjection;
 using NannyAPI.GraphQL;
 using NannyAPI.GraphQL.Addresses;
 using NannyAPI.GraphQL.Children;
+using NannyAPI.GraphQL.Roles;
 using NannyAPI.GraphQL.Users;
 using NannyAPI.Miscellaneous.Errors;
 using System.Text;
@@ -58,7 +59,7 @@ builder.Services
     .AddType<AddressType>()
     .AddType<ChildType>()
     .AddType<ChildQueries>()
-    .AddType<RoleType>()
+    .AddType<RoleQueries>()
     .AddType<GenderType>()
     .AddErrorFilter<GraphQLErrorFilter>()
     .AddFiltering()

@@ -18,7 +18,8 @@ namespace NannyAPI.DependencyInjection
                 .AddSingleton<IPasswordHasher, PasswordHasher>(s => new PasswordHasher())
                 .AddSingleton<IUserDAO>(s => new SQLUserDAO(connectionString))
                 .AddSingleton<IAddressDAO>(s => new SQLAddressDAO(connectionString))
-                .AddSingleton<IChildDAO>(s => new SQLChildDAO(connectionString));
+                .AddSingleton<IChildDAO>(s => new SQLChildDAO(connectionString))
+                .AddSingleton<IRoleDAO>(s => new SQLRoleDAO(connectionString));
         }
     }
 }

@@ -80,7 +80,7 @@ namespace NannyData.DBHelpers
         {
             foreach (DataColumn column in dataRow.Table.Columns)
             {
-                var propertyInfo = item.GetType().GetProperty(column.ColumnName);
+                var propertyInfo = item?.GetType().GetProperty(column.ColumnName);
 
                 if (propertyInfo is not null && dataRow[column] is not DBNull)
                 {

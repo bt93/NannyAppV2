@@ -5,6 +5,7 @@ using NannyAPI.Security.Models;
 using NannyData.Interfaces;
 using NannyModels.Enumerations;
 using NannyModels.Models;
+using NannyModels.Models.User;
 using System.Security.Claims;
 
 namespace NannyAPI.GraphQL.Users
@@ -41,14 +42,14 @@ namespace NannyAPI.GraphQL.Users
 
             if (_passwordHasher.VerifyHashMatch(userCheck.Password ?? string.Empty, input.password, userCheck.Salt ?? string.Empty))
             {
-                var token = _tokenGenerator.GenerateToken(userCheck.UserID, userCheck.UserName ?? string.Empty, userCheck.RoleID);
+                var token = _tokenGenerator.GenerateToken(userCheck.UserID, userCheck.UserName ?? string.Empty, userCheck.RoleID.FirstOrDefault());
                 
                 var returnUser = new ReturnUser()
                 {
                     UserID = userCheck.UserID,
                     EmailAddress = userCheck.EmailAddress,
                     UserName = userCheck.UserName,
-                    Role = userCheck.RoleID,
+                    Roles = userCheck.RoleID,
                     Token = token
                 };
 
@@ -76,12 +77,15 @@ namespace NannyAPI.GraphQL.Users
             {
                 var token = _tokenGenerator.GenerateToken(userID, input?.user.UserName ?? string.Empty, input?.user.RoleID ?? Role.Uninitialized);
 
+                var roles = new List<Role>();
+                roles.Add(input?.user.RoleID ?? Role.Uninitialized);
+
                 var returnUser = new ReturnUser()
                 {
                     UserID = userID,
                     EmailAddress = input?.user.EmailAddress,
                     UserName = input?.user.UserName,
-                    Role = input?.user.RoleID,
+                    Roles = roles,
                     Token = token
                 };
 
@@ -123,7 +127,9 @@ namespace NannyAPI.GraphQL.Users
             };
 
             var addresses = new List<Address>();
+            var roles = new List<Role>();
             addresses.Add(address);
+            roles.Add(input.user.RoleID);
 
             var user = new ApplicationUser()
             {
@@ -134,7 +140,7 @@ namespace NannyAPI.GraphQL.Users
                 Password = hashedPassword.Password,
                 Salt = hashedPassword.Salt,
                 PhoneNumber = input.user.PhoneNumber,
-                RoleID = input.user.RoleID,
+                RoleID = roles,
                 IsVerified = false,
                 Addresses = addresses,
             };

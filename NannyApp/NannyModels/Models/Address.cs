@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using NannyModels.Models.User;
+using System.ComponentModel.DataAnnotations;
 
 namespace NannyModels.Models
 {

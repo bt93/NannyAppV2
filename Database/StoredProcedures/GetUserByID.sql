@@ -20,9 +20,8 @@ BEGIN
 	SET NOCOUNT ON;
 
 	SELECT au.UserID,FirstName, LastName, UserName, 
-	EmailAddress, PhoneNumber, IsVerified, RoleID
+	EmailAddress, PhoneNumber, IsVerified
 	FROM dbo.ApplicationUser au with(nolock)
-	JOIN UserRole ur ON ur.UserID = au.UserID
 		WHERE au.UserID = @UserID;
 END
 GO

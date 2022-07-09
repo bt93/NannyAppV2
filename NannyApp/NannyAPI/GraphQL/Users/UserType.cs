@@ -2,6 +2,7 @@
 using NannyModels.Models;
 using NannyModels.Enumerations;
 using HotChocolate.AspNetCore.Authorization;
+using NannyModels.Models.User;
 
 namespace NannyAPI.GraphQL.Users
 {
@@ -21,10 +22,15 @@ namespace NannyAPI.GraphQL.Users
                 .ResolveWith<Resolvers>(u => u.GetChildrenByUserID(default!, default!))
                 .Description("Gets the users children");
 
-            descriptor
-                .Field("role")
-                .Argument("roleID", a => a.Type<RoleType>())
-                .Resolve(context => context.ArgumentValue<Role>("roleID"));
+            descriptor.Field(u => u.RoleID)
+                .Argument("roles", a => a.Type<RoleType>())
+                .ResolveWith<Resolvers>(u => u.GetRolesByUserID(default!, default!))
+                .Description("Gets the users roles");
+
+            //descriptor
+            //    .Field("roleID")
+            //    .Argument("roles", a => a.Type<RoleType>())
+            //    .Resolve(context => context.ArgumentValue<Role>("roles"));
 
             // Descriptions
             descriptor.Field(u => u.UserID).Description("The Users id");
@@ -33,8 +39,8 @@ namespace NannyAPI.GraphQL.Users
             descriptor.Field(u => u.UserName).Description("The Users user name");
             descriptor.Field(u => u.EmailAddress).Description("The Users email address");
             descriptor.Field(u => u.PhoneNumber).Description("The Users phone number");
-            descriptor.Field(u => u.RoleID).Description("The Users role");
-            descriptor.Field(u => u.RoleID).Description("The Users addresses");
+            descriptor.Field(u => u.RoleID).Description("The Users roles");
+            descriptor.Field(u => u.Addresses).Description("The Users addresses");
         }
 
         public class Resolvers
@@ -49,6 +55,12 @@ namespace NannyAPI.GraphQL.Users
             public ICollection<Child> GetChildrenByUserID([Parent] ApplicationUser user, [Service] IChildDAO childDAO)
             {
                 return childDAO.GetChildrenByUserID(user.UserID);
+            }
+
+            [Authorize]
+            public ICollection<Role> GetRolesByUserID([Parent] ApplicationUser user, [Service] IRoleDAO roleDAO)
+            {
+                return roleDAO.GetRolesByUserID(user.UserID);
             }
         }
 
