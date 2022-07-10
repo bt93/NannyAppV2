@@ -40,24 +40,24 @@ namespace NannyAPI.GraphQL.Users
             return result.UserID > 0 ? result : throw new Exception("User does not exist");
         }
 
-        [Authorize(Roles = new[] { "Caretaker" })]
+        [Authorize]
         public ICollection<ApplicationUser> GetMyParents(ClaimsPrincipal claimsPrincipal)
         {
             claimsPrincipal.UserNullCheck();
             string id = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
-            string role = claimsPrincipal.FindFirstValue(ClaimTypes.Role);
 
-            if (id is null)
-            {
-                throw new UnauthorizedAccessException("User not logged in");
-            }
+            return _userDAO.GetUserConnectedByChild(Int32.Parse(id), Role.Parent);
 
-            Role roleID;
+            throw new Exception("Something went wrong");
+        }
 
-            if (Enum.TryParse(role, out roleID))
-            {
-                return _userDAO.GetUserConnectedByChild(Int32.Parse(id), roleID);
-            }
+        [Authorize]
+        public ICollection<ApplicationUser> GetMyCaretakers(ClaimsPrincipal claimsPrincipal)
+        {
+            claimsPrincipal.UserNullCheck();
+            string id = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            return _userDAO.GetUserConnectedByChild(Int32.Parse(id), Role.Caretaker);
 
             throw new Exception("Something went wrong");
         }

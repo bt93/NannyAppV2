@@ -20,7 +20,7 @@ namespace NannyAPI.GraphQL.Children
             claimsPrincipal.UserNullCheck();
             string id = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            return _childDAO.AddChild(child, int.Parse(id));
+            return _childDAO.AddNewChild(child, int.Parse(id));
         }
     }
 }

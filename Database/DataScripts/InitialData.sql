@@ -6,12 +6,14 @@ INSERT INTO ApplicationUser (FirstName, LastName, UserName, EmailAddress, Passwo
  Values ('Jason', 'Test', 'Admin', 'jason@jason.com', 'ZRxBa7n1wdGcxyPsTmpCjCZ0AWs=', '555-555-5555', 'YsHl2Z3eNWI=', 1)
  ,('Ruth', 'Test', 'Rudi', 'ruth@ruth.com', 'ZRxBa7n1wdGcxyPsTmpCjCZ0AWs=', '555-555-55555', 'YsHl2Z3eNWI=', 0)
  ,('Megan', 'Test', 'Meg', 'megan@megan.com', 'ZRxBa7n1wdGcxyPsTmpCjCZ0AWs=', '555-555-5555', 'YsHl2Z3eNWI=', 0)
+ ,('Matt', 'Test', 'Matt', 'matt@matt.com', 'ZRxBa7n1wdGcxyPsTmpCjCZ0AWs=', '555-555-5555', 'YsHl2Z3eNWI=', 0)
 
 INSERT INTO UserRole (UserID, RoleID)
 	VALUES ((SELECT UserID FROM ApplicationUser WHERE UserName = 'Admin'), (SELECT RoleID FROM Role WHERE RoleName = 'Admin'))
 	,((SELECT UserID FROM ApplicationUser WHERE UserName = 'Admin'), (SELECT RoleID FROM Role WHERE RoleName = 'Caretaker'))
 	,((SELECT UserID FROM ApplicationUser WHERE UserName = 'Rudi'), (SELECT RoleID FROM Role WHERE RoleName = 'Caretaker'))
 	,((SELECT UserID FROM ApplicationUser WHERE UserName = 'Meg'), (SELECT RoleID FROM Role WHERE RoleName = 'Parent'))
+	,((SELECT UserID FROM ApplicationUser WHERE UserName = 'Matt'), (SELECT RoleID FROM Role WHERE RoleName = 'Parent'))
 
  INSERT INTO Address (Address1, Locality, Region, PostalCode, County, Country)
  VALUES ('1397 Old House Drive', 'Milledgeville', 'OH', '43142', 'Fayette', 'United States Of America')
@@ -22,6 +24,7 @@ INSERT INTO UserRole (UserID, RoleID)
  VALUES ((SELECT UserID FROM ApplicationUser WHERE UserName = 'Admin'), (SELECT AddressID FROM Address WHERE Address1 = '1397 Old House Drive'))
 ,((SELECT UserID FROM ApplicationUser WHERE UserName = 'Rudi'), (SELECT AddressID FROM Address WHERE Address1 = '1951 Olive Street'))
 ,((SELECT UserID FROM ApplicationUser WHERE UserName = 'Meg'), (SELECT AddressID FROM Address WHERE Address1 = '4344 Horner Street'))
+,((SELECT UserID FROM ApplicationUser WHERE UserName = 'Matt'), (SELECT AddressID FROM Address WHERE Address1 = '4344 Horner Street'))
 ,((SELECT UserID FROM ApplicationUser WHERE UserName = 'Admin'), (SELECT AddressID FROM Address WHERE Address1 = '1951 Olive Street'))
 
 INSERT INTO Gender (GenderCode, GenderName)
@@ -39,6 +42,7 @@ SET @ChildID = @@IDENTITY
 INSERT INTO ChildUser (UserID, ChildID)
 	VALUES ((SELECT UserID FROM ApplicationUser WHERE UserName = 'Rudi'), @ChildID)
 	,((SELECT UserID FROM ApplicationUser WHERE UserName = 'Meg'), @ChildID)
+	,((SELECT UserID FROM ApplicationUser WHERE UserName = 'Matt'), @ChildID)
 
 INSERT INTO Image (ImageURL)
 	VALUES ('https://media.istockphoto.com/photos/frustrated-young-child-sulking-with-crossed-arms-and-dirty-look-picture-id475710000?k=20&m=475710000&s=612x612&w=0&h=-XJ5IojQ5cFlYtUPbC5SNWal5eqzE3DRiBDf2hljfO0=')

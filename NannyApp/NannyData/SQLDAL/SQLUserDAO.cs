@@ -78,7 +78,7 @@ namespace NannyData.SQLDAL
                 {
                     var command = connection.CreateNewCommand("dbo.GetUserConnectedByChild");
                     command.AddWithValue("@UserID", userID, SqlDbType.Int);
-                    command.AddWithValue("@RoleID", role.GetOppositeRole(), SqlDbType.Int);
+                    command.AddWithValue("@RoleID", role, SqlDbType.Int);
 
                     return command.ExecuteQueryAsync<ApplicationUser>().GetAwaiter().GetResult();
                 }

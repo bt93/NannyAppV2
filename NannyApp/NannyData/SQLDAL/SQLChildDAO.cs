@@ -59,13 +59,13 @@ namespace NannyData.SQLDAL
             }
         }
 
-        public bool AddChild(ChildInput child, int userID)
+        public bool AddNewChild(ChildInput child, int userID)
         {
             using (var connection = _connectionString.CreateConnection())
             {
                 try
                 {
-                    var command = connection.CreateNewCommand("dbo.AddChild");
+                    var command = connection.CreateNewCommand("dbo.AddNewChild");
                     command.AddWithValue("@FirstName", child.FirstName ?? string.Empty, SqlDbType.VarChar);
                     command.AddWithValue("@LastName", child.LastName ?? string.Empty, SqlDbType.VarChar);
                     command.AddWithValue("@GenderID", child.GenderID, SqlDbType.Int);
