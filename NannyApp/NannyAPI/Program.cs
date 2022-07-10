@@ -58,6 +58,7 @@ builder.Services
     .AddType<AddressQueries>()
     .AddType<UserType>()
     .AddType<AddressType>()
+    .AddType<AddressMutations>()
     .AddType<ChildType>()
     .AddType<ChildQueries>()
     .AddType<ChildMutations>()

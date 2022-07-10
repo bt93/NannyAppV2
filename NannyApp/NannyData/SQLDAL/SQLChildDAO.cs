@@ -59,7 +59,7 @@ namespace NannyData.SQLDAL
             }
         }
 
-        public bool AddNewChild(ChildInput child, int userID)
+        public int AddNewChild(ChildInput child, int userID)
         {
             using (var connection = _connectionString.CreateConnection())
             {
@@ -75,7 +75,7 @@ namespace NannyData.SQLDAL
                     command.AddWithValue("@Active", true, SqlDbType.Bit);
                     command.AddWithValue("@UserID", userID, SqlDbType.Int);
 
-                    return command.ExecuteWithReturnValueAsync<int>().GetAwaiter().GetResult() == 1;
+                    return command.ExecuteWithReturnValueAsync<int>().GetAwaiter().GetResult();
                 }
                 catch (Exception ex)
                 {

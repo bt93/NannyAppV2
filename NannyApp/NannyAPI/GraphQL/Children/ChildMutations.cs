@@ -15,12 +15,34 @@ namespace NannyAPI.GraphQL.Children
             _childDAO = childDAO;
         }
 
-        public bool AddChild(ChildInput child, ClaimsPrincipal claimsPrincipal)
+        public Child AddChild(ChildInput child, ClaimsPrincipal claimsPrincipal)
         {
             claimsPrincipal.UserNullCheck();
             string id = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            return _childDAO.AddNewChild(child, int.Parse(id));
+            int childID = _childDAO.AddNewChild(child, int.Parse(id));
+
+            if (childID > 0)
+            {
+                return MapChild(child, childID, int.Parse(id));
+            }
+
+            throw new Exception("Something went wrong");
+        }
+
+        private Child MapChild(ChildInput child, int childID, int userID)
+        {
+            return new Child()
+            {
+                ChildID = childID,
+                FirstName = child.FirstName,
+                LastName = child.LastName,
+                GenderID = child.GenderID,
+                DateOfBirth = child.DateOfBirth,
+                RatePerHour = child.RatePerHour,
+                NeedsDiapers = child.NeedsDiapers,
+                IsActive = true
+            };
         }
     }
 }

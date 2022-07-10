@@ -35,5 +35,37 @@ namespace NannyData.SQLDAL
                 }
             }
         }
+
+        public int AddNewAddress(AddressInput address, int userID)
+        {
+            using (var connection = _connectionString.CreateConnection())
+            {
+                try
+                {
+                    var command = connection.CreateNewCommand("dbo.AddNewAddress");
+                    command.AddWithValue("@Address1", address.Address1 ?? string.Empty, SqlDbType.VarChar);
+                    command.AddWithValue("@Address2", address.Address2 ?? string.Empty, SqlDbType.VarChar);
+                    command.AddWithValue("@Address3", address.Address3 ?? string.Empty, SqlDbType.VarChar);
+                    command.AddWithValue("@Address4", address.Address4 ?? string.Empty, SqlDbType.VarChar);
+                    command.AddWithValue("@Locality", address.Locality ?? string.Empty, SqlDbType.VarChar);
+                    command.AddWithValue("@Region", address.Region ?? string.Empty, SqlDbType.VarChar);
+                    command.AddWithValue("@PostalCode", address.PostalCode ?? string.Empty, SqlDbType.VarChar);
+                    command.AddWithValue("@County", address.County ?? string.Empty, SqlDbType.VarChar);
+                    command.AddWithValue("@Country", address.Country ?? string.Empty, SqlDbType.VarChar);
+                    command.AddWithValue("@UserID", userID, SqlDbType.Int);
+
+
+                    return command.ExecuteWithReturnValueAsync<int>().GetAwaiter().GetResult();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
     }
 }

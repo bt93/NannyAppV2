@@ -13,15 +13,15 @@ DROP PROCEDURE IF EXISTS dbo.AddNewAddress
 GO
 CREATE PROCEDURE dbo.AddNewAddress
 	@Address1 VARCHAR(200),
-	@Address2 VARCHAR(200),
-	@Address3 VARCHAR(200),
-	@Address4 VARCHAR(200),
+	@Address2 VARCHAR(200) = '',
+	@Address3 VARCHAR(200) = '',
+	@Address4 VARCHAR(200) = '',
 	@Locality VARCHAR(200),
 	@Region VARCHAR(200),
 	@PostalCode VARCHAR(10),
 	@County VARCHAR(60),
 	@Country VARCHAR(60),
-	@UserID VARCHAR(60)
+	@UserID INT
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -38,9 +38,8 @@ BEGIN
 
 	INSERT INTO UserAddress (AddressID, UserID)
 		VALUES (@AddressID, @UserID)
-
-
+	
 	COMMIT TRANSACTION
-	RETURN 1;
+	RETURN @AddressID;
 END
 GO
