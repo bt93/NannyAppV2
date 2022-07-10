@@ -32,6 +32,22 @@ namespace NannyAPI.GraphQL.Addresses
             throw new Exception("Something went wrong");
         }
 
+        [Authorize]
+        public Address UpdateAddress(AddressInput address, int addressID, ClaimsPrincipal claimsPrincipal)
+        {
+            claimsPrincipal.UserNullCheck();
+            string id = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            bool success = _addressDAO.UpdateAddress(address, int.Parse(id), addressID);
+
+            if (success)
+            {
+                return MapAddress(address, addressID, int.Parse(id));
+            }
+
+            throw new Exception("Something went wrong");
+        }
+
         private Address MapAddress(AddressInput address, int addressID, int userID)
         {
             return new Address()

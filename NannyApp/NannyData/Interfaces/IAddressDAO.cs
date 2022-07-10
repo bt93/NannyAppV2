@@ -16,7 +16,16 @@ namespace NannyData.Interfaces
         /// </summary>
         /// <param name="address">Address</param>
         /// <param name="userID">The users id</param>
-        /// <returns>The new address idl</returns>
+        /// <returns>The new address id</returns>
         public int AddNewAddress(AddressInput address, int userID);
+
+        /// <summary>
+        /// Updates and existing address
+        /// </summary>
+        /// <param name="address">The address</param>
+        /// <param name="userID">The user id</param>
+        /// <param name="addressID">The address id</param>
+        /// <returns>If the update was successful</returns>
+        public bool UpdateAddress(AddressInput address, int userID, int addressID);
     }
 }
