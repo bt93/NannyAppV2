@@ -48,7 +48,7 @@ builder.Services
 
 
 builder.Services
-    .AddRepositories(builder.Configuration, plainSecret)
+    .AddRepositories(builder.Configuration)
     .AddGraphQLServer()
     .AddAuthorization()
     .AddQueryType<Query>()

@@ -5,9 +5,16 @@ namespace NannyAPI.Security
 {
     public class PasswordHasher : IPasswordHasher
     {
-        private const int _workFactor = 1000;
-        private const int _salt = 8;
-        private const int _keyBytes = 20;
+        private int _workFactor;
+        private int _salt;
+        private int _keyBytes;
+
+        public PasswordHasher(int workFactor, int salt, int keyBytes)
+        {
+            _workFactor = workFactor;
+            _salt = salt;
+            _keyBytes = keyBytes;
+        }
 
         /// <inheritdoc />
         public PasswordHash ComputeHash(string plainTextPassword)
