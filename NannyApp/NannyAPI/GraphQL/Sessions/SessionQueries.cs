@@ -24,5 +24,14 @@ namespace NannyAPI.GraphQL.Sessions
 
             return _sessionDAO.GetSessionByID(sessionID, int.Parse(id));
         }
+
+        [Authorize]
+        public ICollection<Session> GetMyActiveSessions(ClaimsPrincipal claimsPrincipal)
+        {
+            claimsPrincipal.UserNullCheck();
+            string id = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            return _sessionDAO.GetActiveSessionsByUserID(int.Parse(id));
+        }
     }
 }

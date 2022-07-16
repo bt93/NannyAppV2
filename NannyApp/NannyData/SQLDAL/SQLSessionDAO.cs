@@ -36,5 +36,27 @@ namespace NannyData.SQLDAL
                 }
             }
         }
+
+        public ICollection<Session> GetActiveSessionsByUserID(int userID)
+        {
+            using (var connection = _connectionString.CreateConnection())
+            {
+                try
+                {
+                    var command = connection.CreateNewCommand("dbo.GetActiveSessionByUserID");
+                    command.AddWithValue("@UserID", userID, SqlDbType.Int);
+
+                    return command.ExecuteQueryAsync<Session>().GetAwaiter().GetResult();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
     }
 }

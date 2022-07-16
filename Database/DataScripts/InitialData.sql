@@ -58,7 +58,7 @@ INSERT INTO ImageChild (ImageID, ChildID)
 	VALUES (@ImageID, @ChildID)
 
 INSERT INTO Session (ChildID, DropOff, PickUp, Notes)
-	VALUES (@ChildID, GETDATE(), '', '')
+	VALUES (@ChildID, GETDATE(), null, '')
 DECLARE @SessionID INT
 SET @SessionID = @@IDENTITY
 
