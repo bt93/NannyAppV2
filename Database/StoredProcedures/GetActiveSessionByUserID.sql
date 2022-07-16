@@ -22,7 +22,7 @@ BEGIN
     -- Insert statements for procedure here
 	SELECT s.* FROM Session s WITH(NOLOCK)
 		JOIN SessionUser su ON su.SessionID = s.SessionID
-		WHERE su.UserID = 2
+		WHERE su.UserID = @UserID
 		AND (s.PickUp IS NULL OR s.PickUp > GETDATE())
 END
 GO
