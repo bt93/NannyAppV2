@@ -7,6 +7,7 @@ namespace NannyAPI.GraphQL.Children
     {
         protected override void Configure(IObjectTypeDescriptor<Child> descriptor)
         {
+            descriptor.Description("The children on file");
             descriptor
              .Field("genderID")
              .Argument("genderID", a => a.Type<GenderType>())

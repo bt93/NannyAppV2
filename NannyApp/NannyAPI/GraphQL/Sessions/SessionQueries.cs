@@ -23,6 +23,7 @@ namespace NannyAPI.GraphQL.Sessions
         /// <param name="claimsPrincipal">The verified user</param>
         /// <returns>The session</returns>
         [Authorize]
+        [GraphQLDescription("Gets a session by the id. Only returns session if connected to current user.")]
         public Session GetSessionByID(int sessionID, ClaimsPrincipal claimsPrincipal)
         {
             claimsPrincipal.UserNullCheck();
@@ -37,6 +38,7 @@ namespace NannyAPI.GraphQL.Sessions
         /// <param name="claimsPrincipal">The verified user</param>
         /// <returns>A collection of session</returns>
         [Authorize]
+        [GraphQLDescription("Gets current users active sessions")]
         public ICollection<Session> GetMyActiveSessions(ClaimsPrincipal claimsPrincipal)
         {
             claimsPrincipal.UserNullCheck();

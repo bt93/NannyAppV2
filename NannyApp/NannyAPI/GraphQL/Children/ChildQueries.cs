@@ -21,6 +21,7 @@ namespace NannyAPI.GraphQL.Children
         /// <param name="claimsPrincipal">The verified user</param>
         /// <returns>A collection of children</returns>
         [Authorize]
+        [GraphQLDescription("Gets the current users children")]
         public ICollection<Child> GetMyChildren(ClaimsPrincipal claimsPrincipal)
         {
             string id = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -34,6 +35,7 @@ namespace NannyAPI.GraphQL.Children
         /// <param name="claimsPrincipal">The verified user</param>
         /// <returns>The child</returns>
         [Authorize]
+        [GraphQLDescription("Gets the child by their id. Only returns child if connected to user")]
         public Child GetChild(int childID, ClaimsPrincipal claimsPrincipal)
         {
             string id = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);

@@ -22,6 +22,7 @@ namespace NannyAPI.GraphQL.Children
         /// <param name="claimsPrincipal">The verified user</param>
         /// <returns>The Child</returns>
         /// <exception cref="Exception"></exception>
+        [GraphQLDescription("Adds a new child and connects to current user")]
         public Child AddChild(ChildInput child, ClaimsPrincipal claimsPrincipal)
         {
             claimsPrincipal.UserNullCheck();

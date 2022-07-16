@@ -25,6 +25,7 @@ namespace NannyAPI.GraphQL.Users
         /// </summary>
         /// <returns>The User</returns>
         [Authorize]
+        [GraphQLDescription("Gets the current user")]
         public ApplicationUser GetCurrentUser(ClaimsPrincipal claimsPrincipal)
         {
             claimsPrincipal.UserNullCheck();
@@ -40,6 +41,7 @@ namespace NannyAPI.GraphQL.Users
         /// <returns>A user</returns>
         /// <exception cref="Exception">Exception</exception>
         [Authorize(Roles = new[] { "Admin" } )]
+        [GraphQLDescription("Gets a user by their id. Only allowed for admins")]
         public ApplicationUser GetUser(int userID)
         {
             var result = _userDAO.GetUserByID(userID);
@@ -53,6 +55,7 @@ namespace NannyAPI.GraphQL.Users
         /// <returns>The Parents</returns>
         /// <exception cref="Exception">Exception</exception>
         [Authorize]
+        [GraphQLDescription("Gets all parents connected to the current user")]
         public ICollection<ApplicationUser> GetMyParents(ClaimsPrincipal claimsPrincipal)
         {
             claimsPrincipal.UserNullCheck();
@@ -70,6 +73,7 @@ namespace NannyAPI.GraphQL.Users
         /// <returns>The caretakers</returns>
         /// <exception cref="Exception">Exception</exception>
         [Authorize]
+        [GraphQLDescription("Gets all the caretakers connected to the current user")]
         public ICollection<ApplicationUser> GetMyCaretakers(ClaimsPrincipal claimsPrincipal)
         {
             claimsPrincipal.UserNullCheck();

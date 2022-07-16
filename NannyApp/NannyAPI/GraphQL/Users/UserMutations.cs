@@ -36,6 +36,7 @@ namespace NannyAPI.GraphQL.Users
         /// <param name="input">The username/email and password</param>
         /// <returns>The user</returns>
         /// <exception cref="UnauthorizedAccessException">If the user doesn't exist or password is incorrect</exception>
+        [GraphQLDescription("Verifies a user and returns a token")]
         public LoginPayload Login(LoginInput input)
         {
             var userCheck = _userDAO.GetUserForLogin(input.userNameOrEmail);
@@ -71,6 +72,7 @@ namespace NannyAPI.GraphQL.Users
         /// <returns>The register payload</returns>
         /// <exception cref="Exception"></exception>
         /// <exception cref="UnauthorizedAccessException"></exception>
+        [GraphQLDescription("Registers a user and sends a token")]
         public RegisterPayload Register(RegisterInput input)
         {
             if (input is null || input?.user.Addresses.Count == 0) { throw new Exception("User input is null."); }
@@ -117,6 +119,7 @@ namespace NannyAPI.GraphQL.Users
         /// <param name="claimsPrincipal">The verified user</param>
         /// <returns></returns>
         [Authorize]
+        [GraphQLDescription("Updates current user")]
         public bool UpdateUser(string firstName, string lastName, string phoneNumber, ClaimsPrincipal claimsPrincipal)
         {
             claimsPrincipal.UserNullCheck();
@@ -132,6 +135,7 @@ namespace NannyAPI.GraphQL.Users
         /// <param name="claimsPrincipal">The verified user</param>
         /// <returns>True if verified</returns>
         [Authorize]
+        [GraphQLDescription("Verifies the user.")]
         public bool VerifyUser(int userID, ClaimsPrincipal claimsPrincipal)
         {
             claimsPrincipal.CheckUserIdentity(userID);

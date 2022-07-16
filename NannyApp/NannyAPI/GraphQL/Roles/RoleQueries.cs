@@ -25,6 +25,7 @@ namespace NannyAPI.GraphQL.Roles
         /// <param name="claimsPrincipal">The verfied user</param>
         /// <returns>A collection of roles</returns>
         [Authorize]
+        [GraphQLDescription("Gets the current users roles")]
         public ICollection<Role> GetMyRoles(ClaimsPrincipal claimsPrincipal)
         {
             claimsPrincipal.UserNullCheck();
@@ -39,6 +40,7 @@ namespace NannyAPI.GraphQL.Roles
         /// <param name="userID">The users id</param>
         /// <returns>A collection of roles</returns>
         [Authorize(Roles = new[] { "Admin" })]
+        [GraphQLDescription("Gets the roles for a user by their id. Only allowed by admins.")]
         public ICollection<Role> GetRolesByID(int userID)
         {
             return _roleDAO.GetRolesByUserID(userID);

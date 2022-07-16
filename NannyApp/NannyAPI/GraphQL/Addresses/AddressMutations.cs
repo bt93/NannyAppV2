@@ -24,6 +24,7 @@ namespace NannyAPI.GraphQL.Addresses
         /// <returns>The address</returns>
         /// <exception cref="Exception"></exception>
         [Authorize]
+        [GraphQLDescription("Adds a new address and connects to the current user")]
         public Address AddNewAddress(AddressInput address, ClaimsPrincipal claimsPrincipal)
         {
             claimsPrincipal.UserNullCheck();
@@ -48,6 +49,7 @@ namespace NannyAPI.GraphQL.Addresses
         /// <returns>The address</returns>
         /// <exception cref="Exception"></exception>
         [Authorize]
+        [GraphQLDescription("Updates a users address")]
         public Address UpdateAddress(AddressInput address, int addressID, ClaimsPrincipal claimsPrincipal)
         {
             claimsPrincipal.UserNullCheck();

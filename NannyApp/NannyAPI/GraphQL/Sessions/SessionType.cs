@@ -11,6 +11,7 @@ namespace NannyAPI.GraphQL.Sessions
     {
         protected override void Configure(IObjectTypeDescriptor<Session> descriptor)
         {
+            descriptor.Description("The sessions on file");
             descriptor.Field(s => s.Child)
                 .ResolveWith<Resolvers>(s => s.GetChildByID(default!, default!, default!))
                 .Description("Gets the child by the child id");
