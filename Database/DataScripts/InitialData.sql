@@ -33,6 +33,11 @@ INSERT INTO Gender (GenderCode, GenderName)
 	,('N', 'Nonbinary')
 	,('O', 'Other')
 
+INSERT INTO SessionDetailType (SessionDetailTypeName)
+	VALUES ('Meal')
+	, ('Diaper')
+	, ('Nap')
+
 -- Add children
 INSERT INTO Child (FirstName, LastName, GenderID, DateOfBirth, RatePerHour, NeedsDiapers, Active)
 	VALUES ('Ellie', 'Test', 2, '2018-09-25', 10, 0, 1)
@@ -59,7 +64,11 @@ SET @SessionID = @@IDENTITY
 
 INSERT INTO SessionUser(SessionID, UserID)
 	VALUES (@SessionID, (SELECT UserID FROM ApplicationUser WHERE UserName = 'Rudi'))
-	--,(@SessionID, (SELECT UserID FROM ApplicationUser WHERE UserName = 'Meg'))
+	,(@SessionID, (SELECT UserID FROM ApplicationUser WHERE UserName = 'Meg'))
+
+INSERT INTO SessionDetail (SessionID, SessionDetailTypeID, StartTime, EndTime, Type, Notes)
+	VALUES (@SessionID, (SELECT SessionDetailTypeID FROM SessionDetailType WHERE SessionDetailTypeName = 'Meal'), DATEADD(HOUR, 1, GETDATE()), null, 'Breakfast', 'She ate good.')
+		,(@SessionID, (SELECT SessionDetailTypeID FROM SessionDetailType WHERE SessionDetailTypeName = 'Nap'), DATEADD(HOUR, 3, GETDATE()), DATEADD(HOUR, 4, GETDATE()), null, 'She slept good.')
 
 -- Insert common types of allergies
 INSERT INTO AllergyType (AllergyTypeName) VALUES ('Drug');

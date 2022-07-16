@@ -127,30 +127,21 @@ CREATE TABLE SessionUser (
 	CONSTRAINT fk_User_to_Session FOREIGN KEY (UserID) REFERENCES ApplicationUser(UserID)
 )
 
-CREATE TABLE Diaper (
-	DiaperID INT IDENTITY PRIMARY KEY,
-	SessionID INT NOT NULL,
-	ChangeTime DATETIMEOFFSET(7) NOT NULL,
-	Notes TEXT
-	CONSTRAINT fk_diaper_session FOREIGN KEY (SessionID) REFERENCES Session(SessionID)
+CREATE TABLE SessionDetailType (
+	SessionDetailTypeID INT IDENTITY PRIMARY KEY,
+	SessionDetailTypeName VARCHAR(100) NOT NULL
 )
 
-CREATE TABLE Meal (
-	MealID INT IDENTITY PRIMARY KEY,
+CREATE TABLE SessionDetail (
+	SessionDetailID INT IDENTITY PRIMARY KEY,
 	SessionID INT NOT NULL,
-	MealTime DATETIMEOFFSET(7) NOT NULL,
-	MealType VARCHAR(20),
-	Notes TEXT
-	CONSTRAINT fk_meal_session FOREIGN KEY (SessionID) REFERENCES Session(SessionID)
-)
-
-CREATE TABLE Nap (
-	NapID INT IDENTITY PRIMARY KEY,
-	SessionID INT NOT NULL,
-	StartTime DATETIME,
-	EndTime DATETIME,
-	Notes TEXT
-	CONSTRAINT fk_nap_session FOREIGN KEY (SessionID) REFERENCES Session(SessionID)
+	SessionDetailTypeID INT NOT NULL,
+	StartTime DATETIMEOFFSET(7) NOT NULL,
+	EndTime DATETIMEOFFSET(7),
+	Type VARCHAR(30),
+	Notes TEXT,
+	CONSTRAINT fk_SessionDetail_to_Session FOREIGN KEY (SessionID) REFERENCES Session(SessionID),
+	CONSTRAINT fk_SessionDetail_to_SessionDetailType FOREIGN KEY (SessionDetailTypeID) REFERENCES SessionDetailType(SessionDetailTypeID)
 )
 
 
@@ -165,16 +156,16 @@ CREATE TABLE Allergy (
 	AllergyID INT IDENTITY PRIMARY KEY,
 	AllergyName VARCHAR(80) NOT NULL,
 	AllergyTypeID INT NOT NULL,
-	CONSTRAINT fk_allergy_allergy_type FOREIGN KEY (AllergyTypeID) REFERENCES AllergyType(AllergyTypeID)
+	CONSTRAINT fk_Allergy_to_AllergyType FOREIGN KEY (AllergyTypeID) REFERENCES AllergyType(AllergyTypeID)
 )
 
 -- Creates the table that references the allergy to the child
 CREATE TABLE ChildAllergy (
 	ChildID INT NOT NULL,
 	AllergyID INT NOT NULL,
-	CONSTRAINT pk_child_allergies PRIMARY KEY (ChildID, AllergyID),
-	CONSTRAINT fk_child_to_allergy FOREIGN KEY (ChildID) REFERENCES Child(ChildID),
-	CONSTRAINT fk_allergy_to_child FOREIGN KEY (AllergyID) REFERENCES Allergy(AllergyID)
+	CONSTRAINT pk_ChildAllergies PRIMARY KEY (ChildID, AllergyID),
+	CONSTRAINT fk_Child_to_Allergy FOREIGN KEY (ChildID) REFERENCES Child(ChildID),
+	CONSTRAINT fk_Allergy_to_Child FOREIGN KEY (AllergyID) REFERENCES Allergy(AllergyID)
 );
 
 GO
