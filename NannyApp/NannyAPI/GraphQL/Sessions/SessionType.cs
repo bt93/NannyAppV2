@@ -18,6 +18,13 @@ namespace NannyAPI.GraphQL.Sessions
 
         public class Resolvers
         {
+            /// <summary>
+            /// Gets the Child by session
+            /// </summary>
+            /// <param name="session">The session</param>
+            /// <param name="childDAO">The child dao</param>
+            /// <param name="claimsPrincipal">The verified user</param>
+            /// <returns></returns>
             [Authorize]
             public Child GetChildByID([Parent] Session session, [Service] IChildDAO childDAO, ClaimsPrincipal claimsPrincipal)
             {

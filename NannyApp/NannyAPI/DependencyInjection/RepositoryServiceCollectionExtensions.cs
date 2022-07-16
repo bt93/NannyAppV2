@@ -6,6 +6,12 @@ namespace NannyAPI.DependencyInjection
 {
     public static class RepositoryServiceCollectionExtensions
     {
+        /// <summary>
+        /// Injects the needed services
+        /// </summary>
+        /// <param name="services">The services</param>
+        /// <param name="configuration">The configuration</param>
+        /// <returns>The services</returns>
         public static IServiceCollection AddRepositories(
             this IServiceCollection services, 
             IConfiguration configuration)

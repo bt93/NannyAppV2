@@ -16,6 +16,13 @@ namespace NannyAPI.GraphQL.Addresses
             _addressDAO = addressDAO;
         }
 
+        /// <summary>
+        /// Adds a new address
+        /// </summary>
+        /// <param name="address">The Address</param>
+        /// <param name="claimsPrincipal">The verified user</param>
+        /// <returns>The address</returns>
+        /// <exception cref="Exception"></exception>
         [Authorize]
         public Address AddNewAddress(AddressInput address, ClaimsPrincipal claimsPrincipal)
         {
@@ -32,6 +39,14 @@ namespace NannyAPI.GraphQL.Addresses
             throw new Exception("Something went wrong");
         }
 
+        /// <summary>
+        /// Updates an address
+        /// </summary>
+        /// <param name="address">The address</param>
+        /// <param name="addressID">The address id</param>
+        /// <param name="claimsPrincipal">The verified user</param>
+        /// <returns>The address</returns>
+        /// <exception cref="Exception"></exception>
         [Authorize]
         public Address UpdateAddress(AddressInput address, int addressID, ClaimsPrincipal claimsPrincipal)
         {

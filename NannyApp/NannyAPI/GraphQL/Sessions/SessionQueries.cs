@@ -16,6 +16,12 @@ namespace NannyAPI.GraphQL.Sessions
             _sessionDAO = sessionDAO;
         }
 
+        /// <summary>
+        /// Gets a session by the id
+        /// </summary>
+        /// <param name="sessionID">The session id</param>
+        /// <param name="claimsPrincipal">The verified user</param>
+        /// <returns>The session</returns>
         [Authorize]
         public Session GetSessionByID(int sessionID, ClaimsPrincipal claimsPrincipal)
         {
@@ -25,6 +31,11 @@ namespace NannyAPI.GraphQL.Sessions
             return _sessionDAO.GetSessionByID(sessionID, int.Parse(id));
         }
 
+        /// <summary>
+        /// Gets the logged in users active sessions
+        /// </summary>
+        /// <param name="claimsPrincipal">The verified user</param>
+        /// <returns>A collection of session</returns>
         [Authorize]
         public ICollection<Session> GetMyActiveSessions(ClaimsPrincipal claimsPrincipal)
         {

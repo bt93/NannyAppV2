@@ -15,6 +15,13 @@ namespace NannyAPI.GraphQL.Children
             _childDAO = childDAO;
         }
 
+        /// <summary>
+        /// Adds new child
+        /// </summary>
+        /// <param name="child">The child</param>
+        /// <param name="claimsPrincipal">The verified user</param>
+        /// <returns>The Child</returns>
+        /// <exception cref="Exception"></exception>
         public Child AddChild(ChildInput child, ClaimsPrincipal claimsPrincipal)
         {
             claimsPrincipal.UserNullCheck();

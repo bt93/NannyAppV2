@@ -42,18 +42,36 @@ namespace NannyAPI.GraphQL.Users
 
         public class Resolvers
         {
+            /// <summary>
+            /// Gets all the users addresses
+            /// </summary>
+            /// <param name="user">The user</param>
+            /// <param name="addressDAO">The address dao</param>
+            /// <returns>Collection of addresses</returns>
             [Authorize]
             public ICollection<Address> GetAddressByUserID([Parent] ApplicationUser user, [Service] IAddressDAO addressDAO)
             {
                 return addressDAO.GetAddressesByUserID(user.UserID);
             }
 
+            /// <summary>
+            /// Gets all the childrent connected to the user
+            /// </summary>
+            /// <param name="user">The user</param>
+            /// <param name="childDAO">The child dao</param>
+            /// <returns>The children</returns>
             [Authorize]
             public ICollection<Child> GetChildrenByUserID([Parent] ApplicationUser user, [Service] IChildDAO childDAO)
             {
                 return childDAO.GetChildrenByUserID(user.UserID);
             }
 
+            /// <summary>
+            /// Gets all of the users roles
+            /// </summary>
+            /// <param name="user">The user</param>
+            /// <param name="roleDAO">The role dao</param>
+            /// <returns>The roles</returns>
             [Authorize]
             public ICollection<Role> GetRolesByUserID([Parent] ApplicationUser user, [Service] IRoleDAO roleDAO)
             {

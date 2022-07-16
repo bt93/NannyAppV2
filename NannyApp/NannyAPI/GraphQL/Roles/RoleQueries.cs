@@ -19,6 +19,11 @@ namespace NannyAPI.GraphQL.Roles
             _roleDAO = roleDAO;
         }
 
+        /// <summary>
+        /// Gets the current users roles
+        /// </summary>
+        /// <param name="claimsPrincipal">The verfied user</param>
+        /// <returns>A collection of roles</returns>
         [Authorize]
         public ICollection<Role> GetMyRoles(ClaimsPrincipal claimsPrincipal)
         {
@@ -28,6 +33,11 @@ namespace NannyAPI.GraphQL.Roles
             return _roleDAO.GetRolesByUserID(Int32.Parse(id));
         }
 
+        /// <summary>
+        /// Gets a users role by their id. Only allowed for admin.
+        /// </summary>
+        /// <param name="userID">The users id</param>
+        /// <returns>A collection of roles</returns>
         [Authorize(Roles = new[] { "Admin" })]
         public ICollection<Role> GetRolesByID(int userID)
         {

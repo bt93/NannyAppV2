@@ -64,6 +64,13 @@ namespace NannyAPI.GraphQL.Users
             throw new UnauthorizedAccessException("Username or password incorect.");
         }
 
+        /// <summary>
+        /// Checks if the user already exists. If not, hashes the password, inserts the new ueser and then sends a token
+        /// </summary>
+        /// <param name="input">The new users input </param>
+        /// <returns>The register payload</returns>
+        /// <exception cref="Exception"></exception>
+        /// <exception cref="UnauthorizedAccessException"></exception>
         public RegisterPayload Register(RegisterInput input)
         {
             if (input is null || input?.user.Addresses.Count == 0) { throw new Exception("User input is null."); }
@@ -101,6 +108,14 @@ namespace NannyAPI.GraphQL.Users
             throw new Exception("Something went wrong, please try again later");
         }
 
+        /// <summary>
+        /// Updates a users info
+        /// </summary>
+        /// <param name="firstName">Users first name</param>
+        /// <param name="lastName">Users last name</param>
+        /// <param name="phoneNumber">Users phone number</param>
+        /// <param name="claimsPrincipal">The verified user</param>
+        /// <returns></returns>
         [Authorize]
         public bool UpdateUser(string firstName, string lastName, string phoneNumber, ClaimsPrincipal claimsPrincipal)
         {
@@ -110,6 +125,12 @@ namespace NannyAPI.GraphQL.Users
             return _userDAO.UpdateUser(Int32.Parse(id), firstName, lastName, phoneNumber);
         }
 
+        /// <summary>
+        /// Verifies the user
+        /// </summary>
+        /// <param name="userID">The user id</param>
+        /// <param name="claimsPrincipal">The verified user</param>
+        /// <returns>True if verified</returns>
         [Authorize]
         public bool VerifyUser(int userID, ClaimsPrincipal claimsPrincipal)
         {
