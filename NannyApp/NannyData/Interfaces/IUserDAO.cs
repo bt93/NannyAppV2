@@ -17,7 +17,7 @@ namespace NannyData.Interfaces
         /// </summary>
         /// <param name="id">The user id</param>
         /// <returns>The Users</returns>
-        public ICollection<ApplicationUser> GetUsersByChildID(int childID);
+        public ICollection<ApplicationUser> GetUsersByChildID(int childID, int userID, Role roleID);
 
         /// <summary>
         /// Gets the user info for login

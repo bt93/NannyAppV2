@@ -37,12 +37,14 @@ namespace NannyData.SQLDAL
             }
         }
 
-        public ICollection<ApplicationUser> GetUsersByChildID(int childID)
+        public ICollection<ApplicationUser> GetUsersByChildID(int childID, int userID, Role roleID)
         {
             using (var connection = _connectionString.CreateConnection())
             {
                 var command = connection.CreateNewCommand("dbo.GetUsersByChildID");
                 command.AddWithValue("@ChildID", childID, SqlDbType.Int);
+                command.AddWithValue("@UserID", userID, SqlDbType.Int);
+                command.AddWithValue("@RoleID", roleID, SqlDbType.Int);
 
                 return command.ExecuteQueryAsync<ApplicationUser>().GetAwaiter().GetResult();
             }

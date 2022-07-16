@@ -1,5 +1,6 @@
 ﻿using NannyModels.Enumerations;
 using NannyModels.Extensions;
+using NannyModels.Models.UserModels;
 
 namespace NannyModels.Models.ChildModels
 {
@@ -76,5 +77,21 @@ namespace NannyModels.Models.ChildModels
         /// The child is active
         /// </value>
         public bool IsActive { get; set; }
+
+        /// <summary>
+        /// Gets or sets the childs parents
+        /// </summary>
+        /// <value>
+        /// The parents
+        /// </value>
+        public ICollection<ApplicationUser> Parents { get; set; } = new List<ApplicationUser>();
+
+        /// <summary>
+        /// Gets or sets the childs caretakers
+        /// </summary>
+        /// <value>
+        /// The caretaker
+        /// </value>
+        public ICollection<ApplicationUser> Caretakers { get; set; } = new List<ApplicationUser>();
     }
 }
