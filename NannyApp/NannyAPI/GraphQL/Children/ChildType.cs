@@ -27,6 +27,16 @@ namespace NannyAPI.GraphQL.Children
                 .Field(c => c.Caretakers)
                 .ResolveWith<Resolvers>(c => c.GetCaretakersByChild(default!, default!, default!))
                 .Description("Gets the caretakers by the child");
+
+            descriptor.Field(c => c.ChildID).Description("The childs id");
+            descriptor.Field(c => c.FirstName).Description("The childs first name");
+            descriptor.Field(c => c.LastName).Description("The childs last name");
+            descriptor.Field(c => c.GenderID).Description("The childs gender id");
+            descriptor.Field(c => c.GenderName).Description("The childs gender");
+            descriptor.Field(c => c.DateOfBirth).Description("The childs date of birth");
+            descriptor.Field(c => c.RatePerHour).Description("The childs rate per hour");
+            descriptor.Field(c => c.NeedsDiapers).Description("Does the child need diapers?");
+            descriptor.Field(c => c.IsActive).Description("Is the child active?");
         }
     }
 

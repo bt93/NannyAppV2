@@ -55,6 +55,37 @@ namespace NannyModels.Models.ChildModels
         public DateTimeOffset DateOfBirth { get; set; }
 
         /// <summary>
+        /// Gets the child age in years
+        /// </summary>
+        /// <value>
+        /// The childs age in years
+        /// </value>
+        public int AgeInYears
+        { 
+            get 
+            {
+                var today = DateTime.Today;
+                var age = today.Year - DateOfBirth.Year;
+                return DateOfBirth.Date > today.AddYears(-age) ? --age : age;
+            } 
+        }
+
+        /// <summary>
+        /// Gets the childs age in months
+        /// </summary>
+        /// <value>
+        /// The childs age in months
+        /// </value>
+        public int AgeInMonths
+        {
+            get
+            {
+                var today = DateTime.Today;
+                return ((today.Year - DateOfBirth.Year) * 12) + today.Month - DateOfBirth.Month;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the childs Rate Per Hour
         /// </summary>
         /// <value>
