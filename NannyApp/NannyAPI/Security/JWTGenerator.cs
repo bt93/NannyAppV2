@@ -18,11 +18,11 @@ namespace NannyAPI.Security
         /// <inheritdoc />
         public string GenerateToken(int userID, string userName)
         {
-            return GenerateToken(userID, userName, Role.Uninitialized);
+            return GenerateToken(userID, userName, new List<Role>());
         }
 
         /// <inheritdoc />
-        public string GenerateToken(int userID, string userName, Role role)
+        public string GenerateToken(int userID, string userName, ICollection<Role> roles)
         {
             List<Claim> claims = new List<Claim>()
             {
@@ -30,7 +30,7 @@ namespace NannyAPI.Security
                 new Claim(ClaimTypes.Name, userName),
             };
 
-            if (!role.Equals(Role.Uninitialized))
+            foreach (var role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role.ToString()));
             }

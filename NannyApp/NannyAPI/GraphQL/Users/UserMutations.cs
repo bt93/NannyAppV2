@@ -46,12 +46,8 @@ namespace NannyAPI.GraphQL.Users
             {
                 List<Role> roles = new List<Role>();
                 roles.AddRange(_roleDAO.GetRolesByUserID(userCheck.UserID));
-                Role roleToUse;
 
-                if (roles.Contains(Role.Admin)) { roleToUse = Role.Admin; }
-                else { roleToUse = roles.FirstOrDefault(); }
-
-                var token = _tokenGenerator.GenerateToken(userCheck.UserID, userCheck.UserName ?? string.Empty, roleToUse);
+                var token = _tokenGenerator.GenerateToken(userCheck.UserID, userCheck.UserName ?? string.Empty, roles);
                 
                 var returnUser = new ReturnUser()
                 {
@@ -84,10 +80,11 @@ namespace NannyAPI.GraphQL.Users
             
             if (userID > 0)
             {
-                var token = _tokenGenerator.GenerateToken(userID, input?.user.UserName ?? string.Empty, input?.user.RoleID ?? Role.Uninitialized);
 
                 var roles = new List<Role>();
                 roles.Add(input?.user.RoleID ?? Role.Uninitialized);
+
+                var token = _tokenGenerator.GenerateToken(userID, input?.user.UserName ?? string.Empty, roles);
 
                 var returnUser = new ReturnUser()
                 {

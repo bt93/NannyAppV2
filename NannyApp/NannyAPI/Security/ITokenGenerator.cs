@@ -19,6 +19,6 @@ namespace NannyAPI.Security
         /// <param name="userName">The usersName</param>
         /// <param name="role">The role</param>
         /// <returns></returns>
-        string GenerateToken(int userID, string userName, Role role);
+        string GenerateToken(int userID, string userName, ICollection<Role> roles);
     }
 }
