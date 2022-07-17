@@ -21,7 +21,7 @@ BEGIN
 
     -- Insert statements for procedure here
 	SELECT a.*, ua.UserID
-	FROM Address a
+	FROM Address a WITH(NOLOCK)
 	JOIN UserAddress ua ON ua.AddressID = a.AddressID
 	WHERE ua.UserID = @UserID;
 

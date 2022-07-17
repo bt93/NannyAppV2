@@ -21,7 +21,7 @@ BEGIN
 
 	SELECT au.UserID,FirstName, LastName, UserName, 
 	EmailAddress, PhoneNumber, IsVerified
-	FROM dbo.ApplicationUser au with(nolock)
+	FROM dbo.ApplicationUser au WITH(NOLOCK)
 		WHERE au.UserID = @UserID;
 END
 GO

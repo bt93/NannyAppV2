@@ -20,7 +20,7 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	SELECT r.RoleID AS Role FROM Role r
+	SELECT r.RoleID AS Role FROM Role r WITH(NOLOCK)
 		JOIN UserRole ur ON ur.RoleID = r.RoleID
 		WHERE ur.UserID = @UserID;
 END

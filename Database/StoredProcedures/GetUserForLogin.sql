@@ -20,7 +20,7 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	SELECT au.UserID, EmailAddress, UserName, Password, Salt FROM ApplicationUser au with(nolock)
+	SELECT au.UserID, EmailAddress, UserName, Password, Salt FROM ApplicationUser au WITH(NOLOCK)
 		WHERE (UserName = @UserInput OR EmailAddress = @UserInput);
 END
 GO

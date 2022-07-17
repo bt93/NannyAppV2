@@ -18,7 +18,7 @@ BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
-	If EXISTS (SELECT UserID FROM ApplicationUser 
+	If EXISTS (SELECT UserID FROM ApplicationUser WITH(NOLOCK)
 				WHERE IsVerified = 0
 				AND UserID = @UserID)
 		UPDATE ApplicationUser

@@ -20,15 +20,15 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	IF EXISTS ((SELECT su.UserID FROM SessionUser su
+	IF EXISTS ((SELECT su.UserID FROM SessionUser su WITH(NOLOCK)
 				JOIN ApplicationUser au ON au.UserID = su.UserID
 				JOIN UserRole r ON r.UserID = au.UserID
 				WHERE su.SessionID = @SessionID
 				AND au.UserID = @UserID))
-		SELECT s.* FROM Session s
+		SELECT s.* FROM Session s WITH(NOLOCK)
 			WHERE SessionID = @SessionID;
-	ELSE IF EXISTS (SELECT UserID FROM UserRole WHERE UserID = @UserID AND RoleID = 3)
-		SELECT s.* FROM Session s
+	ELSE IF EXISTS (SELECT UserID FROM UserRole WITH(NOLOCK) WHERE UserID = @UserID AND RoleID = 3)
+		SELECT s.* FROM Session s WITH(NOLOCK)
 				WHERE SessionID = @SessionID;
 
 END

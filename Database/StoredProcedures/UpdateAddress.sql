@@ -30,7 +30,7 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	IF EXISTS (SELECT UserID FROM UserAddress
+	IF EXISTS (SELECT UserID FROM UserAddress WITH(NOLOCK)
 				WHERE UserID = @UserID
 				AND AddressID = @AddressID)
 				

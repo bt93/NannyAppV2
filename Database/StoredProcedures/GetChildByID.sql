@@ -22,7 +22,7 @@ BEGIN
 
 	IF EXISTS (
 		SELECT au.UserID FROM 
-		ApplicationUser au
+		ApplicationUser au WITH(NOLOCK)
 		JOIN UserRole ur ON ur.UserID = au.UserID
 		WHERE au.UserID = @UserID
 		AND ur.RoleID = 3)

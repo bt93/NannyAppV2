@@ -20,11 +20,11 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	SELECT * FROM ApplicationUser au
+	SELECT * FROM ApplicationUser au WITH(NOLOCK)
 	JOIN UserRole ur ON ur.UserID = au.UserID
 		WHERE ur.RoleID = @RoleID AND
 		au.UserID IN 
-			(SELECT UserID FROM Child c
+			(SELECT UserID FROM Child c WITH(NOLOCK)
 				JOIN ChildUser cu ON cu.ChildID = c.ChildID
 				WHERE cu.UserID != @UserID)
 END

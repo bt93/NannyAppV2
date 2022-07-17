@@ -25,7 +25,7 @@ BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
-	IF EXISTS (SELECT au.UserID FROM ApplicationUser au
+	IF EXISTS (SELECT au.UserID FROM ApplicationUser au WITH(NOLOCK)
 				JOIN ChildUser cu ON cu.UserID = au.UserID
 				WHERE au.UserID = @UserID AND cu.ChildID = @ChildID)
 
@@ -38,7 +38,7 @@ BEGIN
 		NeedsDiapers = @NeedsDiapers
 		WHERE ChildID = @ChildID
 	
-	ELSE IF EXISTS (SELECT ur.UserID FROM UserRole ur
+	ELSE IF EXISTS (SELECT ur.UserID FROM UserRole ur WITH(NOLOCK)
 					WHERE ur.UserID = @UserID AND ur.RoleID = 3)
 							UPDATE Child
 		SET FirstName = @FirstName,

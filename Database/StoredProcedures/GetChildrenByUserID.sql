@@ -20,7 +20,7 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	SELECT * FROM Child c
+	SELECT * FROM Child c WITH(NOLOCK)
 		JOIN ChildUser cu ON c.ChildID = cu.ChildID
 		WHERE cu.UserID = @UserID;
 END
