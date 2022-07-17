@@ -64,5 +64,12 @@ namespace NannyData.Interfaces
         /// </summary>
         /// <param name="userID">The user id</param>
         public bool VerifyUser(int userID);
+
+        /// <summary>
+        /// Deactivates a user
+        /// </summary>
+        /// <param name="userID">The user id</param>
+        /// <returns>If successful</returns>
+        public bool DeactivateUser(int userID);
     }
 }

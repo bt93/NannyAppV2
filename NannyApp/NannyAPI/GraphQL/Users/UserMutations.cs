@@ -142,6 +142,21 @@ namespace NannyAPI.GraphQL.Users
             return _userDAO.VerifyUser(userID);
         }
 
+        /// <summary>
+        /// Deactivates a user"
+        /// </summary>
+        /// <param name="claimsPrincipal">The verified user</param>
+        /// <returns>If successful</returns>
+        [Authorize]
+        [GraphQLDescription("Deactivates a user")]
+        public bool DeactivateUser(ClaimsPrincipal claimsPrincipal)
+        {
+            claimsPrincipal.UserNullCheck();
+            string id = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            return _userDAO.DeactivateUser(int.Parse(id));
+        }
+
         private ApplicationUser MapUser(RegisterInput input, PasswordHash hashedPassword)
         {
             var address = new Address()

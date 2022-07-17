@@ -203,5 +203,27 @@ namespace NannyData.SQLDAL
                 }
             }
         }
+
+        public bool DeactivateUser(int userID)
+        {
+            using (var connection = _connectionString.CreateConnection())
+            {
+                try
+                {
+                    var command = connection.CreateNewCommand("dbo.DeactivateUser");
+                    command.AddWithValue("@UserID", userID, SqlDbType.Int);
+
+                    return command.ExecuteWithReturnValueAsync<int>().GetAwaiter().GetResult() == 1;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
     }
 }
