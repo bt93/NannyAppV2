@@ -22,11 +22,20 @@ BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
-	IF EXISTS (SELECT UserID FROM ChildUser
+	IF EXISTS (SELECT UserID FROM ChildUser WITH(NOLOCK)
 				WHERE ChildID = @ChildID
 				AND UserID = @UserID)
 				
-		SELECT au.* FROM ApplicationUser au
+		SELECT au.* FROM ApplicationUser au WITH(NOLOCK)
+			JOIN ChildUser cu ON cu.UserID = au.UserID
+			JOIN UserRole ur ON ur.UserID = au.UserID
+			WHERE cu.ChildID = @ChildID
+			AND ur.RoleID = @RoleID
+
+	ELSE IF EXISTS (SELECT UserID FROM UserRole WITH(NOLOCK)
+					WHERE UserID = @UserID AND RoleID = 3)
+
+		SELECT au.* FROM ApplicationUser au WITH(NOLOCK)
 			JOIN ChildUser cu ON cu.UserID = au.UserID
 			JOIN UserRole ur ON ur.UserID = au.UserID
 			WHERE cu.ChildID = @ChildID
