@@ -225,5 +225,27 @@ namespace NannyData.SQLDAL
                 }
             }
         }
+
+        public bool ActivateUser(int userID)
+        {
+            using (var connection = _connectionString.CreateConnection())
+            {
+                try
+                {
+                    var command = connection.CreateNewCommand("dbo.ActivateUser");
+                    command.AddWithValue("@UserID", userID, SqlDbType.Int);
+
+                    return command.ExecuteWithReturnValueAsync<int>().GetAwaiter().GetResult() == 1;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
     }
 }
