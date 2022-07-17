@@ -1,7 +1,12 @@
-﻿namespace NannyAPI.Security.Models
+﻿namespace NannyModels.Models.UserModels
 {
     public class PasswordHash
     {
+        /// <summary>
+        /// Creates a new hashed password
+        /// </summary>
+        public PasswordHash() { }
+
         /// <summary>
         /// Creates a new hashed password.
         /// </summary>

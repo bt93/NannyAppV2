@@ -78,5 +78,20 @@ namespace NannyData.Interfaces
         /// <param name="userID">The user id</param>
         /// <returns>If successful</returns>
         public bool ActivateUser(int userID);
+
+        /// <summary>
+        /// Updates a users password and salt
+        /// </summary>
+        /// <param name="passwordHash">The hashed password</param>
+        /// <param name="userID">The user id</param>
+        /// <returns>If Successful</returns>
+        public bool UpdateUserPassword(PasswordHash passwordHash, int userID);
+
+        /// <summary>
+        /// Gets a users password and salt
+        /// </summary>
+        /// <param name="userID">The users id</param>
+        /// <returns>The Hashed password and salt</returns>
+        public PasswordHash GetUserPassword(int userID);
     }
 }

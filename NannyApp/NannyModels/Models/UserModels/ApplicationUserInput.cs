@@ -56,7 +56,20 @@ namespace NannyModels.Models.UserModels
         /// </value>
         [Required(ErrorMessage = "{0} is required")]
         [StringLength(250, MinimumLength = 6)]
+        [DataType(DataType.Password)]
         public string? Password { get; set; }
+
+        /// <summary>
+        /// Gets or sets the password verification
+        /// </summary>
+        /// <value>
+        /// The password verification
+        /// </value>
+        [Required(ErrorMessage = "{0} is required")]
+        [Compare("Password", ErrorMessage = "{0} Does not match with {1].")]
+        [StringLength(250, MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        public string? VerifyPassword { get; set; }
 
         /// <summary>
         /// Gets or sets the Phone Number

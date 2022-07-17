@@ -247,5 +247,51 @@ namespace NannyData.SQLDAL
                 }
             }
         }
+
+        public bool UpdateUserPassword(PasswordHash passwordHash, int userID)
+        {
+            using (var connection = _connectionString.CreateConnection())
+            {
+                try
+                {
+                    var command = connection.CreateNewCommand("dbo.UpdateUserPassword");
+                    command.AddWithValue("@UserID", userID, SqlDbType.Int);
+                    command.AddWithValue("@Password", passwordHash.Password, SqlDbType.VarChar);
+                    command.AddWithValue("@Salt", passwordHash.Salt, SqlDbType.VarChar);
+
+                    return command.ExecuteWithReturnValueAsync<int>().GetAwaiter().GetResult() == 1;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
+
+        public PasswordHash GetUserPassword(int userID)
+        {
+            using (var connection = _connectionString.CreateConnection())
+            {
+                try
+                {
+                    var command = connection.CreateNewCommand("dbo.GetUserPassword");
+                    command.AddWithValue("@UserID", userID, SqlDbType.Int);
+
+                    return command.ExecuteQuerySingleRowAsync<PasswordHash>().GetAwaiter().GetResult();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
     }
 }

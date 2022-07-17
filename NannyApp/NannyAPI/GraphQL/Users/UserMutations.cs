@@ -1,7 +1,6 @@
 ﻿using HotChocolate.AspNetCore.Authorization;
 using NannyAPI.Miscellaneous.Errors;
 using NannyAPI.Security;
-using NannyAPI.Security.Models;
 using NannyData.Interfaces;
 using NannyModels.Enumerations;
 using NannyModels.Models.AddressModels;
@@ -157,6 +156,11 @@ namespace NannyAPI.GraphQL.Users
             return _userDAO.DeactivateUser(int.Parse(id));
         }
 
+        /// <summary>
+        /// Activates a deactive user
+        /// </summary>
+        /// <param name="claimsPrincipal">The verified user</param>
+        /// <returns>If successful</returns>
         [Authorize]
         [GraphQLDescription("Activates a deactive user")]
         public bool ActivateUser(ClaimsPrincipal claimsPrincipal)
@@ -165,6 +169,25 @@ namespace NannyAPI.GraphQL.Users
             string id = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
 
             return _userDAO.ActivateUser(int.Parse(id));
+        }
+
+        [Authorize]
+        [GraphQLDescription("Updates a users password.")]
+        public bool UpdateUserPassword(PasswordUpdateInput input, ClaimsPrincipal claimsPrincipal)
+        {
+            claimsPrincipal.UserNullCheck();
+            string id = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            PasswordHash currentPassword = _userDAO.GetUserPassword(int.Parse(id));
+
+            if (_passwordHasher.VerifyHashMatch(currentPassword.Password ?? string.Empty, input.CurrentPassword ?? string.Empty, currentPassword.Salt ?? string.Empty))
+            {
+                PasswordHash newPassword = _passwordHasher.ComputeHash(input.NewPassword ?? string.Empty);
+
+                return _userDAO.UpdateUserPassword(newPassword, int.Parse(id));
+            }
+
+            throw new Exception("Current Password is incorrect.");
         }
 
         private ApplicationUser MapUser(RegisterInput input, PasswordHash hashedPassword)

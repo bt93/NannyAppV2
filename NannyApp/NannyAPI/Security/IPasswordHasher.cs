@@ -1,4 +1,4 @@
-﻿using NannyAPI.Security.Models;
+﻿using NannyModels.Models.UserModels;
 
 namespace NannyAPI.Security
 {
