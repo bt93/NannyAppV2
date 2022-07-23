@@ -1,4 +1,4 @@
-﻿namespace NannyAPI.GraphQL.Users
+﻿namespace NannyModels.Models.Authentication
 {
     /// <summary>
     /// Login input from the user
