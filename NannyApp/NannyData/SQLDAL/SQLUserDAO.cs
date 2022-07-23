@@ -133,7 +133,6 @@ namespace NannyData.SQLDAL
                     command.AddWithValue("@EmailAddress", user.EmailAddress ?? string.Empty, SqlDbType.VarChar);
                     command.AddWithValue("@Salt", user.Salt ?? string.Empty, SqlDbType.VarChar);
                     command.AddWithValue("@Role", user.Roles.FirstOrDefault(), SqlDbType.VarChar);
-                    command.AddWithValue("@IsVerified", user.IsVerified, SqlDbType.VarChar);
                     command.AddWithValue("@Address1", user.Addresses.First().Address1 ?? string.Empty, SqlDbType.VarChar);
                     command.AddWithValue("@Address2", user.Addresses.First().Address2 ?? string.Empty, SqlDbType.VarChar);
                     command.AddWithValue("@Address3", user.Addresses.First().Address3 ?? string.Empty, SqlDbType.VarChar);

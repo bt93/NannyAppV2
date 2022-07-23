@@ -9,6 +9,7 @@ using NannyAPI.GraphQL.Sessions;
 using NannyAPI.GraphQL.Users;
 using NannyAPI.Miscellaneous.Errors;
 using System.Text;
+using System.Text.Json.Serialization;
 using static NannyAPI.GraphQL.Users.UserType;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -70,7 +71,7 @@ builder.Services
     .AddFiltering()
     .AddSorting();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 
 var app = builder.Build();
