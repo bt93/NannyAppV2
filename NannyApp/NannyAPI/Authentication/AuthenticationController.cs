@@ -39,13 +39,7 @@ namespace NannyAPI.Authentication
 
                 var token = _tokenGenerator.GenerateToken(userCheck.UserID, userCheck.UserName ?? string.Empty, roles);
 
-                var returnUser = new ReturnUser()
-                {
-                    UserID = userCheck.UserID,
-                    Token = token
-                };
-
-                return Ok(returnUser);
+                return Ok(token);
             }
 
             return BadRequest("Username or password incorect.");
@@ -73,13 +67,7 @@ namespace NannyAPI.Authentication
 
                 var token = _tokenGenerator.GenerateToken(userID, input?.UserName ?? string.Empty, roles);
 
-                var returnUser = new ReturnUser()
-                {
-                    UserID = userID,
-                    Token = token
-                };
-
-                return Ok(returnUser);
+                return Ok(token);
             }
 
             return BadRequest("Something went wrong, please try again later");

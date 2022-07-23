@@ -144,6 +144,18 @@ CREATE TABLE SessionDetail (
 	CONSTRAINT fk_SessionDetail_to_SessionDetailType FOREIGN KEY (SessionDetailTypeID) REFERENCES SessionDetailType(SessionDetailTypeID)
 )
 
+CREATE TABLE RefreshToken (
+	TokenID INT IDENTITY PRIMARY KEY,
+	UserID INT NOT NULL,
+	Token VARCHAR(250) NOT NULL,
+	JWTID VARCHAR(250) NOT NULL,
+	IsUsed BIT NOT NULL,
+	IsRevoked BIT NOT NULL,
+	DateAdded DATETIMEOFFSET(7) NOT NULL,
+	DateExpired DATETIMEOFFSET(7) NOT NULL,
+	CONSTRAINT fk_RefreshToken_to_ApplicationUser FOREIGN KEY (UserID) REFERENCES ApplicationUser (UserID)
+)
+
 
 -- Creates the table for allergy types
 CREATE TABLE AllergyType (

@@ -23,7 +23,7 @@ namespace NannyAPI.DependencyInjection
             int keyBytes = int.Parse(configuration["HashSettings:KeyBytes"]);
 
             return services
-                .AddSingleton<ITokenGenerator, JWTGenerator>(s => new JWTGenerator(jwtSecret))
+                .AddSingleton<ITokenGenerator, JWTGenerator>(s => new JWTGenerator(jwtSecret, new SQLRefreshTokenDAO(connectionString)))
                 .AddSingleton<IPasswordHasher, PasswordHasher>(s => new PasswordHasher(workFactor, salt, keyBytes))
                 .AddSingleton<IUserDAO>(s => new SQLUserDAO(connectionString))
                 .AddSingleton<IAddressDAO>(s => new SQLAddressDAO(connectionString))

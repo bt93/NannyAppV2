@@ -1,4 +1,5 @@
 ﻿using NannyModels.Enumerations;
+using NannyModels.Models.Authentication;
 
 namespace NannyAPI.Security
 {
@@ -10,7 +11,7 @@ namespace NannyAPI.Security
         /// <param name="userID">The users id</param>
         /// <param name="userName">The usersName</param>
         /// <returns>The token</returns>
-        string GenerateToken(int userID, string userName);
+        AuthenticationResult GenerateToken(int userID, string userName);
 
         /// <summary>
         /// Generates a new authentication token.
@@ -19,6 +20,6 @@ namespace NannyAPI.Security
         /// <param name="userName">The usersName</param>
         /// <param name="role">The role</param>
         /// <returns></returns>
-        string GenerateToken(int userID, string userName, ICollection<Role> roles);
+        AuthenticationResult GenerateToken(int userID, string userName, ICollection<Role> roles);
     }
 }

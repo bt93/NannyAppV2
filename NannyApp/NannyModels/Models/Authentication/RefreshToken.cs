@@ -23,7 +23,7 @@ namespace NannyModels.Models.Authentication
         /// <value>
         /// The user id
         /// </value>
-        public string? UserID { get; set; }
+        public int UserID { get; set; }
 
         /// <summary>
         /// Gets or sets the token 
@@ -63,7 +63,7 @@ namespace NannyModels.Models.Authentication
         /// <value>
         /// The date the token was created
         /// </value>
-        public DateTime DateAdded { get; set; }
+        public DateTimeOffset DateAdded { get; set; }
 
         /// <summary>
         /// Gets or sets the date the token was expired
@@ -71,7 +71,7 @@ namespace NannyModels.Models.Authentication
         /// <value>
         /// The date the token was expired
         /// </value>
-        public DateTime DateExpired { get; set; }
+        public DateTimeOffset DateExpired { get; set; }
 
         /// <summary>
         /// Gets or sets the user the token applies to
