@@ -70,6 +70,7 @@ builder.Services
     .AddFiltering()
     .AddSorting();
 
+builder.Services.AddControllers();
 
 
 var app = builder.Build();
@@ -90,6 +91,7 @@ app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapGraphQL();
+    endpoints.MapControllers();
 });
 
 app.UseGraphQLVoyager(path: "/schema");

@@ -16,30 +16,6 @@ namespace NannyModels.Models.UserModels
         public int UserID { get; set; }
 
         /// <summary>
-        /// Gets or sets the EmailAddress
-        /// </summary>
-        /// <value>
-        /// The EmailAddress
-        /// </value>
-        public string? EmailAddress { get; set; }
-
-        /// <summary>
-        /// Gets or sets the UserName
-        /// </summary>
-        /// <value>
-        /// The UserName
-        /// </value>
-        public string? UserName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Role
-        /// </summary>
-        /// <value>
-        /// The Role
-        /// </value>
-        public ICollection<Role>? Roles { get; set; } = new List<Role>();
-
-        /// <summary>
         /// Gets or sets the Token
         /// </summary>
         /// <value>
