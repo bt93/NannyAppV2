@@ -1,4 +1,6 @@
-﻿namespace NannyModels.Models.Authentication
+﻿using System.Text.Json.Serialization;
+
+namespace NannyModels.Models.Authentication
 {
     public class AuthenticationResult
     {
@@ -8,6 +10,7 @@
         /// <value>
         /// The auth token
         /// </value>
+        [JsonIgnore]
         public string? Token { get; set; }
 
         /// <summary>
@@ -16,7 +19,17 @@
         /// <value>
         /// The refresh token
         /// </value>
+        [JsonIgnore]
         public string? RefreshToken { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user id
+        /// </summary>
+        /// <value>
+        /// The user id
+        /// </value>
+        [JsonIgnore]
+        public int UserID { get; set; }
 
         /// <summary>
         /// Gets or sets if request was successful

@@ -40,6 +40,11 @@ namespace NannyAPI.Authentication
                 try
                 {
                     var token = _tokenGenerator.GenerateToken(userCheck.UserID, userCheck.UserName ?? string.Empty, roles);
+
+                    Response.Cookies.Append("X-Access-Token", token.Token ?? string.Empty, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
+                    Response.Cookies.Append("X-Refresh-Token", token.RefreshToken ?? string.Empty, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
+                    Response.Cookies.Append("X-UserID", token.UserID.ToString(), new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
+
                     return Ok(token);
                 }
                 catch (Exception ex)
@@ -69,6 +74,10 @@ namespace NannyAPI.Authentication
 
             if (!tokenVerification.Success) { return BadRequest(tokenVerification); }
 
+            Response.Cookies.Append("X-Access-Token", tokenVerification.Token ?? string.Empty, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
+            Response.Cookies.Append("X-Refresh-Token", tokenVerification.RefreshToken ?? string.Empty, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
+            Response.Cookies.Append("X-UserID", tokenVerification.UserID.ToString(), new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
+
             return Ok(tokenVerification);
         }
 
@@ -93,6 +102,10 @@ namespace NannyAPI.Authentication
                 roles.Add(input?.RoleID ?? Role.Uninitialized);
 
                 var token = _tokenGenerator.GenerateToken(userID, input?.UserName ?? string.Empty, roles);
+
+                Response.Cookies.Append("X-Access-Token", token.Token ?? string.Empty, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
+                Response.Cookies.Append("X-Refresh-Token", token.RefreshToken ?? string.Empty, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
+                Response.Cookies.Append("X-UserID", token.UserID.ToString(), new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
 
                 return Ok(token);
             }

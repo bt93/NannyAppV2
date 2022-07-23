@@ -71,7 +71,8 @@ namespace NannyAPI.Security
             {
                 Token = jwtToken,
                 Success = rowCount > 0,
-                RefreshToken = refreshToken.Token
+                RefreshToken = refreshToken.Token,
+                UserID = userID
             };
         }
 
