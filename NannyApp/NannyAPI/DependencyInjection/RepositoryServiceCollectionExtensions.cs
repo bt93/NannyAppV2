@@ -1,4 +1,5 @@
-﻿using NannyAPI.Security;
+﻿using Microsoft.IdentityModel.Tokens;
+using NannyAPI.Security;
 using NannyData.Interfaces;
 using NannyData.SQLDAL;
 
@@ -14,7 +15,8 @@ namespace NannyAPI.DependencyInjection
         /// <returns>The services</returns>
         public static IServiceCollection AddRepositories(
             this IServiceCollection services, 
-            IConfiguration configuration)
+            IConfiguration configuration,
+            TokenValidationParameters validationParameters)
         {
             string? connectionString = configuration.GetConnectionString("NannyDB");
             string jwtSecret = configuration["jwtSecret"];
@@ -23,7 +25,7 @@ namespace NannyAPI.DependencyInjection
             int keyBytes = int.Parse(configuration["HashSettings:KeyBytes"]);
 
             return services
-                .AddSingleton<ITokenGenerator, JWTGenerator>(s => new JWTGenerator(jwtSecret, new SQLRefreshTokenDAO(connectionString)))
+                .AddSingleton<ITokenGenerator, JWTGenerator>(s => new JWTGenerator(jwtSecret, new SQLRefreshTokenDAO(connectionString), validationParameters))
                 .AddSingleton<IPasswordHasher, PasswordHasher>(s => new PasswordHasher(workFactor, salt, keyBytes))
                 .AddSingleton<IUserDAO>(s => new SQLUserDAO(connectionString))
                 .AddSingleton<IAddressDAO>(s => new SQLAddressDAO(connectionString))

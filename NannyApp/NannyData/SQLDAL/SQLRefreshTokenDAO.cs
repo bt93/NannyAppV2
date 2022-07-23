@@ -14,6 +14,28 @@ namespace NannyData.SQLDAL
             _connectionString = connectionString;
         }
 
+        public RefreshToken GetRefreshToken(string token)
+        {
+            using (var connection = _connectionString.CreateConnection())
+            {
+                try
+                {
+                    var command = connection.CreateNewCommand("dbo.GetRefreshToken");
+                    command.AddWithValue("@Token", token, SqlDbType.VarChar);
+
+                    return command.ExecuteQuerySingleRowAsync<RefreshToken>().GetAwaiter().GetResult();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
+
         public int AddRefreshToken(RefreshToken token)
         {
             using (var connection = _connectionString.CreateConnection())
@@ -28,6 +50,28 @@ namespace NannyData.SQLDAL
                     command.AddWithValue("@IsRevoked", token.IsRevoked, SqlDbType.Bit);
                     command.AddWithValue("@DateAdded", token.DateAdded, SqlDbType.DateTimeOffset);
                     command.AddWithValue("@DateExpired", token.DateExpired, SqlDbType.DateTimeOffset);
+
+                    return command.ExecuteWithReturnValueAsync<int>().GetAwaiter().GetResult();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
+
+        public int SetRefreshTokenToIsUsed(int tokenID)
+        {
+            using (var connection = _connectionString.CreateConnection())
+            {
+                try
+                {
+                    var command = connection.CreateNewCommand("dbo.SetRefreshTokenToIsUsed");
+                    command.AddWithValue("@TokenID", tokenID, SqlDbType.Int);
 
                     return command.ExecuteWithReturnValueAsync<int>().GetAwaiter().GetResult();
                 }

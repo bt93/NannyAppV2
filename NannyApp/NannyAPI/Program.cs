@@ -27,6 +27,15 @@ builder.Services.AddAuthorization();
 
 var plainSecret = builder.Configuration["JWTSecret"];
 var jwtSecret = Encoding.ASCII.GetBytes(plainSecret);
+var tokenValidationParameters = new TokenValidationParameters
+{
+    ValidateIssuerSigningKey = true,
+    IssuerSigningKey = new SymmetricSecurityKey(jwtSecret),
+    ValidateIssuer = builder.Environment.IsDevelopment() ? false : true,
+    ValidateAudience = builder.Environment.IsDevelopment() ? false : true,
+    NameClaimType = "name"
+};
+
 builder.Services
     .AddAuthentication(x =>
     {
@@ -38,19 +47,12 @@ builder.Services
     {
         x.RequireHttpsMetadata = builder.Environment.IsDevelopment() ? false : true;
         x.SaveToken = true;
-        x.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(jwtSecret),
-            ValidateIssuer = builder.Environment.IsDevelopment() ? false : true,
-            ValidateAudience = builder.Environment.IsDevelopment() ? false : true,
-            NameClaimType = "name"
-        };
+        x.TokenValidationParameters = tokenValidationParameters;
     });
 
 
 builder.Services
-    .AddRepositories(builder.Configuration)
+    .AddRepositories(builder.Configuration, tokenValidationParameters)
     .AddGraphQLServer()
     .AddAuthorization()
     .AddQueryType<Query>()

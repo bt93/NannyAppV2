@@ -37,12 +37,39 @@ namespace NannyAPI.Authentication
                 List<Role> roles = new List<Role>();
                 roles.AddRange(_roleDAO.GetRolesByUserID(userCheck.UserID));
 
-                var token = _tokenGenerator.GenerateToken(userCheck.UserID, userCheck.UserName ?? string.Empty, roles);
-
-                return Ok(token);
+                try
+                {
+                    var token = _tokenGenerator.GenerateToken(userCheck.UserID, userCheck.UserName ?? string.Empty, roles);
+                    return Ok(token);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(new AuthenticationResult() { Errors = new List<string> { ex.Message } });
+                }
             }
 
             return BadRequest("Username or password incorect.");
+        }
+
+        [HttpPost("refreshtoken")]
+        public IActionResult RefreshToken(TokenRequest tokenRequest)
+        {
+            if (tokenRequest == null) { return BadRequest("No refresh token present."); }
+
+            var tokenVerification = _tokenGenerator.VerifyToken(tokenRequest);
+
+            if (tokenVerification is null)
+            {
+                return BadRequest(new AuthenticationResult()
+                {
+                    Errors = new List<string>() { "There was an issue refreshing the token. Please login again." },
+                    Success = false
+                });
+            }
+
+            if (!tokenVerification.Success) { return BadRequest(tokenVerification); }
+
+            return Ok(tokenVerification);
         }
 
         [HttpPost("register")]
