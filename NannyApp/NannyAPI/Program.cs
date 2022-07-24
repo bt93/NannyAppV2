@@ -74,7 +74,8 @@ builder.Services
     .AddFiltering()
     .AddSorting();
 
-builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+builder.Services.AddControllers()
+    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 
 var app = builder.Build();
@@ -94,7 +95,7 @@ app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapGraphQL();
+    endpoints.MapGraphQL(path: "/api/graphql");
     endpoints.MapControllers();
 });
 
